@@ -1,0 +1,73 @@
+<p-card [header]="'Produto ' + (getId() ? '#' + getId() : '')">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="flex">
+      <div class="col-6 text-left p-0">
+        <p-button [text]="true"
+                  icon="pi pi-arrow-left"
+                  routerLink="/management/product"/>
+      </div>
+      <div class="col-6 text-right p-0">
+        <p-button (onClick)="reset()"
+                  [text]="true"
+                  icon="pi pi-plus"/>
+        <p-button [text]="true"
+                  icon="pi pi-save"
+                  type="submit"/>
+      </div>
+    </div>
+    <div class="flex flex-column gap-2 mt-3">
+      <label for="title">Título</label>
+      <input formControlName="title"
+             id="title"
+             maxlength="100"
+             pInputText
+             type="text"/>
+    </div>
+    <div class="flex flex-column gap-2 mt-3">
+      <label for="description">Descrição</label>
+      <textarea cols="30"
+                formControlName="description"
+                id="description"
+                maxlength="250"
+                pInputTextarea
+                rows="2"></textarea>
+    </div>
+    <div class="flex flex-column gap-2 mt-3">
+      <label [for]="price.inputId">Preço</label>
+      <p-inputNumber #price
+                     [maxFractionDigits]="2"
+                     [minFractionDigits]="2"
+                     [min]="0"
+                     formControlName="price"
+                     inputId="price"
+                     maxlength="25"
+                     mode="decimal"
+                     prefix="R$ "
+                     styleClass="w-full"/>
+    </div>
+    <div class="flex flex-column gap-2 mt-3">
+      <label [for]="category.inputId">Categoria</label>
+      <p-dropdown #category
+                  (onShow)="findAllCategories()"
+                  [editable]="true"
+                  [options]="categories"
+                  emptyMessage="Vazio"
+                  formControlName="category"
+                  maxlength="50"
+                  styleClass="w-full"/>
+    </div>
+    <div class="flex flex-column gap-2 mt-3">
+      <label for="image">Imagem</label>
+      <input formControlName="image"
+             id="image"
+             maxlength="250"
+             pInputText
+             type="text"/>
+      <p-image *ngIf="form.get('image')?.value"
+               [preview]="true"
+               [src]="form.get('image')?.value"
+               alt="Image"
+               width="250"/>
+    </div>
+  </form>
+</p-card>

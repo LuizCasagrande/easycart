@@ -1,0 +1,18 @@
+<app-loader></app-loader>
+<app-navbar #navbar></app-navbar>
+<app-sidebar #sidebar></app-sidebar>
+<div [ngClass]="{'sidebar-padding': sidebar.visible}" class="h-full mx-0 md:mx-8">
+  <div *ngIf="navbar.visible()">
+    <div class="h-6rem"></div>
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <router-outlet/>
+</div>
+
+<p-toast [preventOpenDuplicates]="true"
+         position="top-center"/>
+<p-confirmDialog [closable]="false"
+                 acceptButtonStyleClass="p-button-text"
+                 acceptLabel="Sim"
+                 rejectButtonStyleClass="p-button-text"
+                 rejectLabel="Não"/>
