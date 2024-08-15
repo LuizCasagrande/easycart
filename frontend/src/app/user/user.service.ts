@@ -18,4 +18,8 @@ export class UserService {
     return this.http.get<User>(`${this.endpoint}/logged-in`)
       .pipe(tap(user => this.userSubject.next(user)));
   }
+
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.endpoint}/logged-in`, user);
+  }
 }

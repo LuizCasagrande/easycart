@@ -7,6 +7,7 @@ import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
 import {SidebarService} from "../sidebar/sidebar.service";
 import {catchError} from "rxjs";
 import {Err} from "../shared/err";
+import {CartService} from "../cart/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -14,22 +15,26 @@ import {Err} from "../shared/err";
 })
 export class NavbarComponent implements OnInit {
 
+  cartSize = 0;
+  protected readonly USER_TYPE = UserType;
   protected user!: User;
-  protected readonly userType = UserType;
   protected items: MenuItem[] = [];
 
   constructor(private readonly loginService: LoginService,
               private readonly userService: UserService,
+              private readonly cartService: CartService,
               private readonly sidebarService: SidebarService,
               private readonly confirmationService: ConfirmationService,
               private readonly messageService: MessageService,
               private readonly router: Router) {
     this.loginService.setTokenEvent
-      .subscribe(() => this.findUser());
+      .subscribe(() => this.findUserAndCart());
+    this.cartService.cartChangeEvent
+      .subscribe(r => this.cartSize = r);
   }
 
   ngOnInit(): void {
-    this.findUser();
+    this.findUserAndCart();
     this.createMenuItems();
   }
 
@@ -52,8 +57,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  private findUser(): void {
+  private findUserAndCart(): void {
     if (this.visible()) {
+      this.cartSize = this.cartService.getCartSize();
       this.userService.findLoggedIn()
         .pipe(catchError(Err.handle(this.messageService)))
         .subscribe(r => this.user = r);
@@ -63,6 +69,7 @@ export class NavbarComponent implements OnInit {
   private createMenuItems(): void {
     this.items = [{
       label: 'Perfil',
+      routerLink: '/user',
     }, {
       label: 'Sair',
       command: () => this.logout(),

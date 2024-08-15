@@ -7,10 +7,11 @@
     <app-breadcrumb></app-breadcrumb>
   </div>
   <router-outlet/>
+  <div class="h-2rem"></div>
 </div>
 
 <p-toast [preventOpenDuplicates]="true"
-         position="top-center"/>
+         position="bottom-center"/>
 <p-confirmDialog [closable]="false"
                  acceptButtonStyleClass="p-button-text"
                  acceptLabel="Sim"

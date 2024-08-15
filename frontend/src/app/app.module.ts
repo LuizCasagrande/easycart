@@ -19,6 +19,8 @@ import {LoaderService} from "./shared/loader/loader.service";
 import {LoaderModule} from "./shared/loader/loader.module";
 import {EcBreadcrumbModule} from "./breadcrumb/breadcrumb.module";
 import {ManagementModule} from "./management/management.module";
+import {CatalogModule} from "./catalog/catalog.module";
+import {UserModule} from "./user/user.module";
 
 registerLocaleData(localePt);
 
@@ -38,6 +40,8 @@ registerLocaleData(localePt);
     ConfirmDialogModule,
     LoginModule,
     ManagementModule,
+    CatalogModule,
+    UserModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},

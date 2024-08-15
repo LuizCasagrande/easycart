@@ -14,22 +14,28 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ImageModule} from "primeng/image";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
+import {HeaderActionsModule} from "../../shared/header-actions/header-actions.module";
+import {FieldModule} from "../../shared/field/field.module";
+import {TagModule} from "primeng/tag";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CardModule,
-    TableModule,
-    Button,
-    RouterLink,
-    InputTextModule,
-    PaginatorModule,
-    ReactiveFormsModule,
-    InputTextareaModule,
-    ImageModule,
-    IconFieldModule,
-    InputIconModule,
-  ],
+    imports: [
+        CommonModule,
+        CardModule,
+        TableModule,
+        Button,
+        RouterLink,
+        InputTextModule,
+        PaginatorModule,
+        ReactiveFormsModule,
+        InputTextareaModule,
+        ImageModule,
+        IconFieldModule,
+        InputIconModule,
+        HeaderActionsModule,
+        FieldModule,
+        TagModule,
+    ],
   declarations: [
     ProductListComponent,
     ProductFormComponent,

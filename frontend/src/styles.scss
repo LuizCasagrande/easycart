@@ -40,3 +40,24 @@ app-navbar {
     color: white;
   }
 }
+
+p-image img, .p-image-preview-indicator {
+  border-radius: var(--border-radius);
+}
+
+app-product-detail p-image img {
+  width: 100%;
+}
+
+@for $i from 1 through 500 {
+  .w-#{$i}-px {
+    width: #{$i}px;
+  }
+}
+
+.ec-card-header {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 1.5rem 0 1.5rem;
+}

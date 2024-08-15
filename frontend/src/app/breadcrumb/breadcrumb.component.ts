@@ -21,7 +21,14 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const ignoreList = ['/catalog', '/product/', '/user'];
+
     this.url$.subscribe(url => {
+      if (ignoreList.some(e => url.startsWith(e))) {
+        this.items = [];
+        return;
+      }
+
       const items = url.split('/');
       items.shift();
       this.items = items.map(i => ({label: i.charAt(0).toUpperCase() + i.slice(1)}));

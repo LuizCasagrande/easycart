@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.luizcasagrande.easycart.backend.entities.enums.UserType.CUSTOMER;
+import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +33,10 @@ public class UserService implements CrudService<User>, UserDetailsService {
 
     @Override
     public User save(User entity) {
-        entity.setType(CUSTOMER);
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        if (isNull(entity.getId())) {
+            entity.setType(CUSTOMER);
+            entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        }
         return CrudService.super.save(entity);
     }
 

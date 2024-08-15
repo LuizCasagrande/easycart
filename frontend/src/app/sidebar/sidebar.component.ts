@@ -25,6 +25,13 @@ export class SidebarComponent {
       this.visible = UserType.MANAGER === user?.type && visible;
     });
     this.items = [{
+      label: 'Início',
+      items: [{
+        label: 'Catálogo',
+        icon: 'pi pi-shopping-cart',
+        routerLink: '/catalog',
+      }],
+    }, {
       label: 'Gerenciamento',
       items: [{
         label: 'Produtos',

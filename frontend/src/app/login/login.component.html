@@ -1,27 +1,25 @@
 <div class="h-full flex justify-content-center align-items-center">
-  <p-card header="Login">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <div class="flex flex-column gap-2">
-        <label for="email">Email</label>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <p-card header="Login">
+      <ec-field inputId="email" label="Email">
         <input formControlName="email"
                id="email"
-               maxlength="255"
+               maxlength="250"
                pInputText
                type="email"/>
-      </div>
-      <div class="flex flex-column gap-2 mt-3">
-        <label for="password">Password</label>
+      </ec-field>
+      <ec-field inputId="password" label="Senha">
         <input formControlName="password"
                id="password"
-               maxlength="255"
+               maxlength="250"
                pInputText
                type="password"/>
-      </div>
-      <div class="flex flex-column gap-2 mt-5">
+      </ec-field>
+      <div class="mt-5">
         <p-button label="Login"
                   styleClass="w-full"
                   type="submit"/>
       </div>
-    </form>
-  </p-card>
+    </p-card>
+  </form>
 </div>

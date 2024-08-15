@@ -3,14 +3,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {CatalogComponent} from "./catalog/catalog.component";
 import {DefaultGuard} from "./auth/default.guard";
-import {ManagerGuard} from "./auth/manager.guard";
-import {ProductListComponent} from "./management/product/product-list.component";
-import {ProductFormComponent} from "./management/product/product-form.component";
+import {ProductDetailComponent} from "./catalog/product/product-detail.component";
+import {UserFormComponent} from "./user/user-form.component";
 
 const routes: Routes = [
-  {path: 'management/product', component: ProductListComponent, canActivate: [DefaultGuard, ManagerGuard]},
-  {path: 'management/product/new', component: ProductFormComponent, canActivate: [DefaultGuard, ManagerGuard]},
-  {path: 'management/product/:id', component: ProductFormComponent, canActivate: [DefaultGuard, ManagerGuard]},
+  {path: 'management', loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)},
+  {path: 'user', component: UserFormComponent, canActivate: [DefaultGuard]},
+  {path: 'product/:id', component: ProductDetailComponent, canActivate: [DefaultGuard]},
   {path: 'catalog', component: CatalogComponent, canActivate: [DefaultGuard]},
   {path: 'login', component: LoginComponent},
   {path: '', pathMatch: 'full', redirectTo: 'catalog'},

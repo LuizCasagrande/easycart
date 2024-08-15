@@ -1,12 +1,12 @@
-<p-card [header]="'Produto ' + (getId() ? '#' + getId() : '')">
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <div class="flex">
-      <div class="col-6 text-left p-0">
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <p-card [header]="'Produto ' + (getId() ? '#' + getId() : '')">
+    <ec-header-actions>
+      <div ecTemplate="left">
         <p-button [text]="true"
                   icon="pi pi-arrow-left"
                   routerLink="/management/product"/>
       </div>
-      <div class="col-6 text-right p-0">
+      <div ecTemplate="right">
         <p-button (onClick)="reset()"
                   [text]="true"
                   icon="pi pi-plus"/>
@@ -14,28 +14,25 @@
                   icon="pi pi-save"
                   type="submit"/>
       </div>
-    </div>
-    <div class="flex flex-column gap-2 mt-3">
-      <label for="title">Título</label>
+    </ec-header-actions>
+
+    <ec-field inputId="title" label="Título">
       <input formControlName="title"
              id="title"
              maxlength="100"
              pInputText
              type="text"/>
-    </div>
-    <div class="flex flex-column gap-2 mt-3">
-      <label for="description">Descrição</label>
+    </ec-field>
+    <ec-field inputId="description" label="Descrição">
       <textarea cols="30"
                 formControlName="description"
                 id="description"
                 maxlength="250"
                 pInputTextarea
                 rows="2"></textarea>
-    </div>
-    <div class="flex flex-column gap-2 mt-3">
-      <label [for]="price.inputId">Preço</label>
-      <p-inputNumber #price
-                     [maxFractionDigits]="2"
+    </ec-field>
+    <ec-field inputId="price" label="Preço">
+      <p-inputNumber [maxFractionDigits]="2"
                      [minFractionDigits]="2"
                      [min]="0"
                      formControlName="price"
@@ -44,20 +41,18 @@
                      mode="decimal"
                      prefix="R$ "
                      styleClass="w-full"/>
-    </div>
-    <div class="flex flex-column gap-2 mt-3">
-      <label [for]="category.inputId">Categoria</label>
-      <p-dropdown #category
-                  (onShow)="findAllCategories()"
+    </ec-field>
+    <ec-field inputId="category" label="Categoria">
+      <p-dropdown (onShow)="findAllCategories()"
                   [editable]="true"
                   [options]="categories"
                   emptyMessage="Vazio"
                   formControlName="category"
+                  inputId="category"
                   maxlength="50"
                   styleClass="w-full"/>
-    </div>
-    <div class="flex flex-column gap-2 mt-3">
-      <label for="image">Imagem</label>
+    </ec-field>
+    <ec-field inputId="image" label="Imagem">
       <input formControlName="image"
              id="image"
              maxlength="250"
@@ -68,6 +63,6 @@
                [src]="form.get('image')?.value"
                alt="Image"
                width="250"/>
-    </div>
-  </form>
-</p-card>
+    </ec-field>
+  </p-card>
+</form>

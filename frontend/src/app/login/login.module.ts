@@ -6,15 +6,17 @@ import {CardModule} from "primeng/card";
 import {Button} from "primeng/button";
 import {ReactiveFormsModule} from "@angular/forms";
 import {LoginService} from "./login.service";
+import {FieldModule} from "../shared/field/field.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    InputTextModule,
-    CardModule,
-    Button,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        InputTextModule,
+        CardModule,
+        Button,
+        ReactiveFormsModule,
+        FieldModule,
+    ],
   declarations: [
     LoginComponent,
   ],

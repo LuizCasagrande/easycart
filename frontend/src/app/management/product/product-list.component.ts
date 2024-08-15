@@ -6,6 +6,7 @@ import {CrudList} from "../../framework/crud-list";
 import {PageResponse} from "../../framework/page-response";
 import {ConfirmationService} from "primeng/api";
 import {Err} from "../../shared/err";
+import {MESSAGES} from "../../constants/app.constants";
 
 @Component({
   selector: 'app-product-list',
@@ -36,11 +37,7 @@ export class ProductListComponent extends CrudList<Product> implements OnInit {
           .pipe(catchError(Err.handle(this.messageService)))
           .subscribe(() => {
             this.load();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Registro removido.',
-            });
+            this.messageService.add(MESSAGES.RECORD_REMOVED);
           });
       },
     });

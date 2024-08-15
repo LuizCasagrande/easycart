@@ -8,6 +8,7 @@ import {MessageService} from "primeng/api";
 import {catchError, finalize} from "rxjs";
 import {Err} from "../../shared/err";
 import {LoaderService} from "../../shared/loader/loader.service";
+import {MESSAGES} from "../../constants/app.constants";
 
 @Component({
   selector: 'app-product-form',
@@ -18,8 +19,8 @@ export class ProductFormComponent extends BaseForm {
   protected categories: string[] = [];
 
   constructor(private readonly productService: ProductService,
-              private readonly messageService: MessageService,
               private readonly loaderService: LoaderService,
+              private readonly messageService: MessageService,
               private readonly activatedRoute: ActivatedRoute,
               private readonly router: Router) {
     super();
@@ -31,7 +32,7 @@ export class ProductFormComponent extends BaseForm {
           catchError(Err.handle(this.messageService)),
           finalize(() => this.loaderService.hide()),
         )
-        .subscribe(r => this.form.patchValue(r))
+        .subscribe(r => this.form.patchValue(r));
     }
   }
 
@@ -46,11 +47,7 @@ export class ProductFormComponent extends BaseForm {
         this.router.navigateByUrl('management/product/' + r.id)
           .then(() => {
             this.form.patchValue(r);
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Registro salvo.',
-            });
+            this.messageService.add(MESSAGES.RECORD_SAVED);
           });
       });
   }

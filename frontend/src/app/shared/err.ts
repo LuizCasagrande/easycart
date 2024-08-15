@@ -16,10 +16,10 @@ export class Err {
         messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.message || 'Ocorreu um problema.',
+          detail: err.error?.message || 'Ocorreu um problema.',
         });
       }
-      return throwError(() => new Error(err.message));
+      return throwError(() => new Error(err.error?.message));
     };
   }
 }
