@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UserService} from "./user.service";
-import {BaseForm} from "../framework/base-form";
+import {BaseForm} from "../core/framework/base-form";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {catchError, finalize} from "rxjs";
 import {Err} from "../shared/err";

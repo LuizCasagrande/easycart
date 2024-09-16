@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "./product.service";
-import {BaseForm} from "../../framework/base-form";
+import {BaseForm} from "../../core/framework/base-form";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Product} from "./product";
 import {MessageService} from "primeng/api";
 import {catchError, finalize} from "rxjs";
 import {Err} from "../../shared/err";
 import {LoaderService} from "../../shared/loader/loader.service";
-import {MESSAGES} from "../../constants/app.constants";
+import {MESSAGES} from "../../shared/constants/app.constants";
 
 @Component({
   selector: 'app-product-form',

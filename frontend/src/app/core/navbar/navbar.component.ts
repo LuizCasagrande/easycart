@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../login/login.service";
+import {LoginService} from "../../login/login.service";
 import {Router} from "@angular/router";
-import {UserService} from "../user/user.service";
-import {User, UserType} from "../user/user";
+import {UserService} from "../../user/user.service";
+import {User, UserType} from "../../user/user";
 import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
 import {SidebarService} from "../sidebar/sidebar.service";
 import {catchError} from "rxjs";
-import {Err} from "../shared/err";
-import {CartService} from "../cart/cart.service";
+import {Err} from "../../shared/err";
+import {CartService} from "../../cart/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +16,7 @@ import {CartService} from "../cart/cart.service";
 export class NavbarComponent implements OnInit {
 
   cartSize = 0;
+  enableDarkTheme = false;
   protected readonly USER_TYPE = UserType;
   protected user!: User;
   protected items: MenuItem[] = [];

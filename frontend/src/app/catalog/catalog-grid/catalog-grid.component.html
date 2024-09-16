@@ -1,0 +1,24 @@
+<div [ngClass]="{'mt-2': products.length > 0}" class="flex flex-wrap">
+  <div *ngFor="let product of products" class="p-2 w-12 sm:w-6 md:w-4 lg:w-3 xl:w-20-percent">
+    <div class="flex flex-column border-1 surface-border border-round h-full">
+      <div class="p-3 pb-2">
+        <img [alt]="product.title"
+             [src]="product.image"
+             class="border-round cursor-pointer w-full"
+             routerLink="/product/{{product.id}}"/>
+      </div>
+      <div class="p-3 pt-2 flex flex-column justify-content-between h-full">
+        <span class="text-sm text-600">{{ product.category }}</span>
+        <div [title]="product.title" class="text-base overflow-hidden">{{ product.title }}</div>
+        <div class="flex flex-column">
+          <span class="text-xl font-semibold py-3">{{ product.price | currency }}</span>
+          <p-button (onClick)="onAdd.emit(product.id)"
+                    [outlined]="true"
+                    icon="pi pi-shopping-cart"
+                    label="Comprar"
+                    styleClass="w-full"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

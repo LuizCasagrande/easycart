@@ -1,5 +1,8 @@
 <div class="surface-card shadow-1 border-round-xl p-2">
-  <p-dataView [loading]="loading" [value]="products" layout="grid">
+  <p-dataView [loading]="loading"
+              [value]="products"
+              emptyMessage="Nenhum produto encontrado."
+              layout="grid">
     <ng-template pTemplate="header">
       <div class="flex justify-content-between">
         <p-multiSelect [(ngModel)]="selectedCategories"
@@ -13,59 +16,13 @@
     </ng-template>
 
     <ng-template let-products pTemplate="grid">
-      <div class="flex flex-wrap mt-2">
-        <div *ngFor="let product of products" class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2">
-          <div class="flex flex-column border-1 surface-border border-round h-full">
-            <div class="p-3 pb-2">
-              <img [alt]="product.title"
-                   [src]="product.image"
-                   class="w-full border-round cursor-pointer"
-                   routerLink="/product/{{product.id}}"/>
-            </div>
-            <div class="p-3 pt-2 flex flex-column justify-content-between h-full">
-              <div class="font-medium">
-                <span class="text-sm text-600">{{ product.category }}</span>
-                <div [title]="product.title" class="text-lg overflow-hidden">{{ product.title }}</div>
-              </div>
-              <div class="flex flex-column">
-                <span class="text-xl font-semibold py-3">{{ product.price | currency }}</span>
-                <p-button (onClick)="addToCart(product.id)"
-                          [outlined]="true"
-                          icon="pi pi-shopping-cart"
-                          label="Comprar"
-                          styleClass="w-full"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-catalog-grid (onAdd)="addToCart($event)"
+                        [products]="products"/>
     </ng-template>
 
     <ng-template let-products pTemplate="list">
-      <div *ngFor="let product of products; let first = first"
-           [ngClass]="{'border-top-1 surface-border': !first}"
-           class="col-12 py-3">
-        <div class="flex flex-column sm:flex-row">
-          <div class="pb-3 sm:pb-0">
-            <img [alt]="product.title"
-                 [src]="product.image"
-                 class="w-full sm:max-w-20rem border-round cursor-pointer"
-                 routerLink="/product/{{product.id}}"/>
-          </div>
-          <div class="flex flex-column justify-content-center font-medium sm:w-9 sm:pl-3">
-            <span class="text-sm text-600">{{ product.category }}</span>
-            <div [title]="product.title" class="text-lg overflow-hidden">{{ product.title }}</div>
-          </div>
-          <div class="flex flex-column justify-content-center sm:align-items-end sm:w-3 sm:pr-3">
-            <span class="text-xl font-semibold py-3">{{ product.price | currency }}</span>
-            <p-button (onClick)="addToCart(product.id)"
-                      [outlined]="true"
-                      icon="pi pi-shopping-cart"
-                      label="Comprar"
-                      styleClass="w-full sm:w-auto"/>
-          </div>
-        </div>
-      </div>
+      <app-catalog-list (onAdd)="addToCart($event)"
+                        [products]="products"/>
     </ng-template>
   </p-dataView>
 </div>

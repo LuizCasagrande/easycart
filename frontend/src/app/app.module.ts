@@ -8,8 +8,8 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@ang
 import {ToastModule} from "primeng/toast";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NavbarModule} from "./navbar/navbar.module";
-import {EcSidebarModule} from "./sidebar/sidebar.module";
+import {NavbarModule} from "./core/navbar/navbar.module";
+import {EcSidebarModule} from "./core/sidebar/sidebar.module";
 import {HttpRequestInterceptor} from "./http-request.interceptor";
 import {UserService} from "./user/user.service";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
@@ -17,10 +17,11 @@ import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from "@angular/common";
 import {LoaderService} from "./shared/loader/loader.service";
 import {LoaderModule} from "./shared/loader/loader.module";
-import {EcBreadcrumbModule} from "./breadcrumb/breadcrumb.module";
+import {EcBreadcrumbModule} from "./core/breadcrumb/breadcrumb.module";
 import {ManagementModule} from "./management/management.module";
 import {CatalogModule} from "./catalog/catalog.module";
 import {UserModule} from "./user/user.module";
+import {CartModule} from "./cart/cart.module";
 
 registerLocaleData(localePt);
 
@@ -42,6 +43,7 @@ registerLocaleData(localePt);
     ManagementModule,
     CatalogModule,
     UserModule,
+    CartModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},

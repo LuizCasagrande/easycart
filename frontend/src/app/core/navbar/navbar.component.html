@@ -6,7 +6,7 @@
               [text]="true"
               icon="pi pi-bars"
               styleClass="text-white"/>
-    <span class="text-2xl font-medium">EasyCart</span>
+    <span class="text-2xl font-medium cursor-pointer" routerLink="/catalog">EasyCart</span>
   </div>
   <div>
     <p-iconField iconPosition="left">
@@ -19,6 +19,10 @@
   </div>
   <div>
     <p-menu #menu [model]="items" [popup]="true"/>
+    <p-button (onClick)="enableDarkTheme = !enableDarkTheme"
+              [text]="true"
+              icon="pi {{enableDarkTheme ? 'pi-moon' : 'pi-sun'}}"
+              styleClass="text-white"/>
     <p-button (onClick)="menu.toggle($event)"
               *ngIf="user"
               [label]="user.name.split(' ')[0]"
@@ -29,6 +33,7 @@
               [text]="true"
               badgeClass="bg-white"
               icon="pi pi-shopping-cart"
+              routerLink="cart"
               styleClass="w-4rem text-white"/>
   </div>
 </div>

@@ -4,10 +4,10 @@ import {LoginRequest, LoginService} from "./login.service";
 import {Router} from "@angular/router";
 import {catchError, finalize} from "rxjs";
 import {MessageService} from "primeng/api";
-import {BaseForm} from "../framework/base-form";
+import {BaseForm} from "../core/framework/base-form";
 import {Err} from "../shared/err";
 import {LoaderService} from "../shared/loader/loader.service";
-import {SidebarService} from "../sidebar/sidebar.service";
+import {SidebarService} from "../core/sidebar/sidebar.service";
 
 @Component({
   selector: 'app-login',

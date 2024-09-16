@@ -1,0 +1,24 @@
+<div *ngFor="let product of products; let first = first"
+     [ngClass]="{'border-top-1 surface-border': !first}"
+     class="p-2 py-3">
+  <div class="flex flex-wrap lg:flex-nowrap flex-column lg:flex-row justify-content-between">
+    <div class="flex flex-wrap lg:flex-nowrap align-items-center w-full">
+      <img [alt]="product.title"
+           [src]="product.image"
+           class="border-round cursor-pointer w-full sm:max-w-16rem"
+           routerLink="/product/{{product.id}}">
+      <div class="m-0 lg:mx-3 w-full">
+        <span class="text-sm text-600">{{ product.category }}</span>
+        <div [title]="product.title" class="text-base overflow-hidden">{{ product.title }}</div>
+      </div>
+    </div>
+    <div class="flex flex-column lg:align-items-end justify-content-center">
+      <span class="text-lg font-semibold py-3">{{ product.price | currency }}</span>
+      <p-button (onClick)="onAdd.emit(product.id)"
+                [outlined]="true"
+                icon="pi pi-shopping-cart"
+                label="Comprar"
+                styleClass="w-full lg:w-auto"/>
+    </div>
+  </div>
+</div>

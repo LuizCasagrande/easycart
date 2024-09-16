@@ -1,0 +1,242 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Luiz
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(250)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: enum('CUSTOMER', 'MANAGER')
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: user_address
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: zipcode
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    unique: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: user_address
+            baseColumnNames: user_id
+            constraintName: fk_user_address_user
+            referencedTableName: user
+            referencedColumnNames: id
+  - changeSet:
+      id: 2
+      author: Luiz
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(250)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(750)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal(16, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: cart
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total
+                  type: decimal(16, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_method
+                  type: enum('BANK_SLIP', 'CREDIT_CARD', 'PIX')
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: cart_product
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: decimal(16, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cart_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: cart
+            baseColumnNames: user_id
+            constraintName: fk_cart_user
+            referencedTableName: user
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: cart_product
+            baseColumnNames: product_id
+            constraintName: fk_cart_product_product
+            referencedTableName: product
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: cart_product
+            baseColumnNames: cart_id
+            constraintName: fk_cart_product_cart
+            referencedTableName: cart
+            referencedColumnNames: id
+  - changeSet:
+      id: 3
+      author: Luiz
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: name
+                  value: 'Luiz'
+              - column:
+                  name: email
+                  value: 'luiz@gmail.com'
+              - column:
+                  name: password
+                  value: '{bcrypt}$2a$10$gCpO5hhNtGrnVtRmdM1mxO2f3nSf1O.qNsQRh5Ye8W5DHtSi4Ay8S'
+              - column:
+                  name: phone
+                  value: '11999998888'
+              - column:
+                  name: type
+                  value: 'MANAGER'
+        - insert:
+            tableName: user_address
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: city
+                  value: 'São Paulo'
+              - column:
+                  name: street
+                  value: 'Avenida Paulista'
+              - column:
+                  name: number
+                  value: '1811'
+              - column:
+                  name: zipcode
+                  value: '01310-200'
+              - column:
+                  name: user_id
+                  value: '1'

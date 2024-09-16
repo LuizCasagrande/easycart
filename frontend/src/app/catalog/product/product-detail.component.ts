@@ -7,7 +7,7 @@ import {ProductService} from "../../management/product/product.service";
 import {MessageService} from "primeng/api";
 import {Product} from "../../management/product/product";
 import {CartService} from "../../cart/cart.service";
-import {MESSAGES} from "../../constants/app.constants";
+import {MESSAGES} from "../../shared/constants/app.constants";
 
 @Component({
   selector: 'app-product-detail',

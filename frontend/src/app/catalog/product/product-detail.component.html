@@ -1,44 +1,45 @@
 <p-card *ngIf="product" [header]="product.title">
-  <p-button [text]="true"
-            icon="pi pi-arrow-left"
-            routerLink="/catalog"/>
-  <div class="flex flex-wrap mt-3">
-    <div class="md:w-3">
-      <div class="flex align-items-center text-sm text-600 mb-3">
-        <i class="pi pi-tag"></i>
-        <span>&nbsp;{{ product.category }}</span>
-      </div>
-      <div class="border-1 surface-border border-round">
-        <p-image [preview]="true"
-                 [src]="product.image"
-                 alt="Image"
-                 styleClass="md:max-w-30rem"/>
-      </div>
+  <ec-header-actions>
+    <div ecTemplate="left">
+      <p-button [text]="true"
+                icon="pi pi-arrow-left"
+                routerLink="/catalog"/>
     </div>
+  </ec-header-actions>
 
-    <div class="md:w-9">
-      <div class="md:px-4 md:py-6 pt-3">
-        <div class="font-medium">
-          <div class="text-lg">{{ product.description }}</div>
-        </div>
-        <div class="flex flex-column">
-          <span class="text-xl font-semibold py-4">{{ product.price | currency }}</span>
-          <div class="flex">
-            <p-inputNumber [(ngModel)]="quantity"
-                           [max]="10"
-                           [min]="1"
-                           [prefix]="quantity < 10 ? '0' : ''"
-                           [showButtons]="true"
-                           buttonLayout="horizontal"
-                           decrementButtonIcon="pi pi-minus"
-                           incrementButtonIcon="pi pi-plus"
-                           inputStyleClass="w-45-px"/>
-            <p-button (onClick)="addToCart()"
-                      [outlined]="true"
-                      icon="pi pi-shopping-cart"
-                      label="Comprar"
-                      styleClass="ml-3"/>
-          </div>
+  <div class="flex flex-wrap xl:flex-nowrap">
+    <div class="w-full lg:w-auto text-center sm:text-left">
+      <div class="flex align-items-center gap-1 py-2">
+        <i class="pi pi-tag"></i>
+        <span class="text-sm text-600">{{ product.category }}</span>
+      </div>
+      <p-image [alt]="product.title"
+               [preview]="true"
+               [src]="product.image"
+               styleClass="border-1 surface-border border-round"
+               width="350"/>
+    </div>
+    <div class="flex flex-column justify-content-between w-full p-0 pt-2 xl:pt-5 xl:pl-3">
+      <div [title]="product.description" class="text-base overflow-hidden">{{ product.description }}</div>
+      <div class="flex justify-content-between xl:justify-content-end align-items-end gap-4">
+        <ec-field inputId="quantity" label="Quantidade">
+          <p-inputNumber [(ngModel)]="quantity"
+                         [max]="10"
+                         [min]="1"
+                         [prefix]="quantity < 10 ? '0' : ''"
+                         [showButtons]="true"
+                         buttonLayout="horizontal"
+                         decrementButtonIcon="pi pi-minus"
+                         incrementButtonIcon="pi pi-plus"
+                         inputId="quantity"
+                         inputStyleClass="w-45-px"/>
+        </ec-field>
+        <div class="flex flex-column align-items-end">
+          <span class="text-lg font-semibold py-2">{{ product.price | currency }}</span>
+          <p-button (onClick)="addToCart()"
+                    [outlined]="true"
+                    icon="pi pi-shopping-cart"
+                    label="Comprar"/>
         </div>
       </div>
     </div>

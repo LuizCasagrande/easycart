@@ -1,0 +1,21 @@
+@import 'primeng/resources/themes/aura-light-teal/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';
+
+.p-confirm-dialog-message {
+  margin: 0;
+}
+
+.p-sidebar, .p-menu, .p-confirm-dialog {
+  border: none;
+}
+
+p-image img, .p-image-preview-indicator {
+  border-radius: var(--border-radius);
+}
+
+.p-dataview-emptymessage {
+  text-align: center;
+  padding: 1rem .75rem .5rem .75rem;
+}

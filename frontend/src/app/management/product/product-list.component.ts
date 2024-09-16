@@ -2,11 +2,11 @@ import {Component, Injector, OnInit} from '@angular/core';
 import {ProductService} from "./product.service";
 import {Product} from "./product";
 import {catchError, Observable} from "rxjs";
-import {CrudList} from "../../framework/crud-list";
-import {PageResponse} from "../../framework/page-response";
+import {CrudList} from "../../core/framework/crud-list";
+import {PageResponse} from "../../core/framework/page-response";
 import {ConfirmationService} from "primeng/api";
 import {Err} from "../../shared/err";
-import {MESSAGES} from "../../constants/app.constants";
+import {MESSAGES} from "../../shared/constants/app.constants";
 
 @Component({
   selector: 'app-product-list',

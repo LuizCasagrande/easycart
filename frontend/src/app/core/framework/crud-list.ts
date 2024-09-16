@@ -3,7 +3,7 @@ import {Table} from "primeng/table";
 import {catchError, finalize, Observable, of} from "rxjs";
 import {PageResponse} from "./page-response";
 import {MessageService} from "primeng/api";
-import {Err} from "../shared/err";
+import {Err} from "../../shared/err";
 
 @Directive()
 export abstract class CrudList<T> {

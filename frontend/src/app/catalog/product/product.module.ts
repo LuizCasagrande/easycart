@@ -7,6 +7,8 @@ import {Button} from "primeng/button";
 import {RouterLink} from "@angular/router";
 import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
+import {FieldModule} from "../../shared/field/field.module";
+import {HeaderActionsModule} from "../../shared/header-actions/header-actions.module";
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import {FormsModule} from "@angular/forms";
     RouterLink,
     InputNumberModule,
     FormsModule,
+    FieldModule,
+    HeaderActionsModule,
   ],
   declarations: [
     ProductDetailComponent,

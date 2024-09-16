@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CartService {
 
   cartChangeEvent = new BehaviorSubject<number>(0);
@@ -34,7 +32,7 @@ export class CartService {
     return this.getCart().size;
   }
 
-  private getCart(): Map<string, number> {
+  getCart(): Map<string, number> {
     return new Map(JSON.parse(localStorage.getItem(this.cart) || '[]'));
   }
 

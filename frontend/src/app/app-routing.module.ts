@@ -5,12 +5,14 @@ import {CatalogComponent} from "./catalog/catalog.component";
 import {DefaultGuard} from "./auth/default.guard";
 import {ProductDetailComponent} from "./catalog/product/product-detail.component";
 import {UserFormComponent} from "./user/user-form.component";
+import {CartComponent} from "./cart/cart.component";
 
 const routes: Routes = [
   {path: 'management', loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)},
   {path: 'user', component: UserFormComponent, canActivate: [DefaultGuard]},
   {path: 'product/:id', component: ProductDetailComponent, canActivate: [DefaultGuard]},
   {path: 'catalog', component: CatalogComponent, canActivate: [DefaultGuard]},
+  {path: 'cart', component: CartComponent, canActivate: [DefaultGuard]},
   {path: 'login', component: LoginComponent},
   {path: '', pathMatch: 'full', redirectTo: 'catalog'},
   {path: '**', pathMatch: 'full', redirectTo: 'catalog'},

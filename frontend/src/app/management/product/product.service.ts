@@ -3,7 +3,7 @@ import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Product} from "./product";
-import {PageResponse} from "../../framework/page-response";
+import {PageResponse} from "../../core/framework/page-response";
 
 @Injectable()
 export class ProductService {

@@ -1,0 +1,75 @@
+<p-card>
+  <p-steps [activeIndex]="activeIndex"
+           [model]="steps"
+           [readonly]="true"/>
+</p-card>
+<div class="h-2rem"></div>
+
+<div class="flex flex-wrap">
+  <div [ngSwitch]="activeIndex" class="w-12 xl:w-9">
+    <p-card *ngSwitchCase="0" header="Produtos">
+      <p-dataView *ngIf="products.length > 0 else emptyMessage"
+                  [value]="products"
+                  sortField="id"
+                  sortOrder="1">
+        <ng-template let-products pTemplate="list">
+          <div *ngFor="let product of products; let first = first"
+               [ngClass]="{'border-top-1 surface-border': !first}"
+               class="py-3">
+            <div class="flex flex-wrap xl:flex-nowrap flex-column xl:flex-row justify-content-between">
+              <div class="flex flex-wrap xl:flex-nowrap align-items-center w-full">
+                <img [alt]="product.title"
+                     [src]="product.image"
+                     class="border-round max-w-9rem">
+                <div class="m-0 xl:mx-3 w-full">
+                  <span class="text-sm text-600">{{ product.category }}</span>
+                  <div [title]="product.title" class="text-base overflow-hidden">{{ product.title }}</div>
+                </div>
+              </div>
+              <div class="flex align-items-center justify-content-between w-full xl:w-24rem">
+                <ec-field inputId="quantity" label="Quantidade">
+                  <p-inputNumber (ngModelChange)="onChangeQuantity(product.id, $event)"
+                                 [(ngModel)]="product.quantity"
+                                 [max]="10"
+                                 [min]="1"
+                                 [prefix]="product.quantity < 10 ? '0' : ''"
+                                 [showButtons]="true"
+                                 buttonLayout="horizontal"
+                                 decrementButtonIcon="pi pi-minus"
+                                 incrementButtonIcon="pi pi-plus"
+                                 inputId="quantity"
+                                 inputStyleClass="w-45-px"/>
+                </ec-field>
+                <div class="flex flex-column align-items-end justify-content-center">
+                  <span class="text-lg font-semibold py-2">{{ product.price | currency }}</span>
+                  <p-button (onClick)="remove(product.id)"
+                            [outlined]="true"
+                            icon="pi pi-trash"
+                            styleClass="p-button-danger"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </p-card>
+
+    <app-payment *ngSwitchCase="1"/>
+    <app-confirmation *ngSwitchCase="2"/>
+  </div>
+
+  <div class="w-12 xl:w-3">
+    <p-card header="Total" styleClass="mt-5 ml-0 xl:mt-0 xl:ml-5">
+      <span class="text-lg font-semibold">{{ getTotal() | currency }}</span>
+      <p-button (onClick)="activeIndex = activeIndex + 1"
+                [disabled]="products.length < 1"
+                [outlined]="true"
+                label="Continuar"
+                styleClass="w-full mt-3"/>
+    </p-card>
+  </div>
+</div>
+
+<ng-template #emptyMessage>
+  <span>O seu carrinho está vazio.</span>
+</ng-template>

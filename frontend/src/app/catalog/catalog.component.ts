@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductService} from "../management/product/product.service";
 import {Product} from "../management/product/product";
 import {catchError, finalize} from "rxjs";
 import {Err} from "../shared/err";
 import {MessageService} from "primeng/api";
 import {CartService} from "../cart/cart.service";
-import {MESSAGES} from "../constants/app.constants";
+import {MESSAGES} from "../shared/constants/app.constants";
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrl: './catalog.component.scss',
 })
 export class CatalogComponent implements OnInit {
 
@@ -35,11 +34,21 @@ export class CatalogComponent implements OnInit {
         catchError(Err.handle(this.messageService)),
         finalize(() => this.loading = false),
       )
-      .subscribe(r => this.products = r.content)
+      .subscribe(r => this.products = r.content);
   }
 
   addToCart(productId: number): void {
     this.cartService.add(productId);
     this.messageService.add(MESSAGES.ADDED_TO_CART);
   }
+}
+
+@Directive()
+export class CatalogDataView {
+
+  @Input()
+  products: Product[] = [];
+
+  @Output()
+  onAdd = new EventEmitter<number>();
 }

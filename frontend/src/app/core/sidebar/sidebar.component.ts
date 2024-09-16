@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {SidebarService} from "./sidebar.service";
 import {MenuItem} from "primeng/api";
-import {UserService} from "../user/user.service";
-import {UserType} from "../user/user";
+import {UserService} from "../../user/user.service";
+import {UserType} from "../../user/user";
 import {combineLatest} from "rxjs";
 
 @Component({
