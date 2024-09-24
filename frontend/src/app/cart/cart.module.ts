@@ -9,8 +9,11 @@ import {Button} from "primeng/button";
 import {FieldModule} from "../shared/field/field.module";
 import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
+import {RadioButtonModule} from "primeng/radiobutton";
 import {PaymentComponent} from './payment/payment.component';
-import {ConfirmationComponent} from './confirmation/confirmation.component';
+import {ShippingComponent} from './shipping/shipping.component';
+import {RadioButtonCardModule} from "../shared/radio-button-card/radio-button-card.module";
+import {HeaderActionsModule} from "../shared/header-actions/header-actions.module";
 
 @NgModule({
   imports: [
@@ -22,11 +25,14 @@ import {ConfirmationComponent} from './confirmation/confirmation.component';
     FieldModule,
     InputNumberModule,
     FormsModule,
+    RadioButtonModule,
+    RadioButtonCardModule,
+    HeaderActionsModule,
   ],
   declarations: [
     CartComponent,
     PaymentComponent,
-    ConfirmationComponent,
+    ShippingComponent,
   ],
   exports: [
     CartComponent,

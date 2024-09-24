@@ -1,0 +1,12 @@
+<div (click)="selectedValueChange.emit(radioButtonValue)"
+     class="flex-card cursor-pointer">
+  <div class="flex">
+    <p-radioButton [(ngModel)]="selectedValue"
+                   [inputId]="inputId"
+                   [value]="radioButtonValue"/>
+    <label [for]="inputId" class="flex flex-column cursor-pointer ml-2">
+      <ng-content select="[ecTemplate=left]"></ng-content>
+    </label>
+  </div>
+  <ng-content select="[ecTemplate=right]"></ng-content>
+</div>

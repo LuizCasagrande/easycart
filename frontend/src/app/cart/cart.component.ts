@@ -3,7 +3,11 @@ import {ORDER_STEPS} from "../shared/constants/app.constants";
 import {CartService} from "./cart.service";
 import {ProductService} from "../management/product/product.service";
 import {Product} from "../management/product/product";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {User} from "../user/user";
+import {UserService} from "../user/user.service";
+import {catchError} from "rxjs";
+import {Err} from "../shared/err";
 
 @Component({
   selector: 'app-cart',
@@ -15,9 +19,12 @@ export class CartComponent implements OnInit {
   cart = new Map<string, number>();
   products: Product[] = [];
   activeIndex = 0;
+  user!: User;
 
   constructor(private readonly cartService: CartService,
               private readonly productService: ProductService,
+              private readonly userService: UserService,
+              private readonly messageService: MessageService,
               private readonly confirmationService: ConfirmationService) {
     this.cartService.cartChangeEvent
       .subscribe(() => this.cart = this.cartService.getCart());
@@ -32,6 +39,10 @@ export class CartComponent implements OnInit {
           this.products.push(p);
         });
     }
+
+    this.userService.findLoggedIn()
+      .pipe(catchError(Err.handle(this.messageService)))
+      .subscribe(u => this.user = u);
   }
 
   remove(productId: number): void {

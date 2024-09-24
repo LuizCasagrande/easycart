@@ -16,7 +16,6 @@ import {MESSAGES} from "../../shared/constants/app.constants";
 export class ProductDetailComponent {
 
   product!: Product;
-  quantity = 1;
 
   constructor(private readonly productService: ProductService,
               private readonly cartService: CartService,
@@ -30,16 +29,19 @@ export class ProductDetailComponent {
           catchError(Err.handle(this.messageService)),
           finalize(() => this.loaderService.hide()),
         )
-        .subscribe(r => this.product = r);
+        .subscribe(p => {
+          p.quantity = 1;
+          this.product = p;
+        });
     }
   }
 
-  getId(): number {
-    return Number(this.activatedRoute.snapshot.paramMap.get('id') || 0);
+  addToCart(): void {
+    this.cartService.add(this.product.id, this.product.quantity);
+    this.messageService.add(MESSAGES.ADDED_TO_CART);
   }
 
-  addToCart(): void {
-    this.cartService.add(this.product.id, this.quantity);
-    this.messageService.add(MESSAGES.ADDED_TO_CART);
+  private getId(): number {
+    return Number(this.activatedRoute.snapshot.paramMap.get('id') || 0);
   }
 }

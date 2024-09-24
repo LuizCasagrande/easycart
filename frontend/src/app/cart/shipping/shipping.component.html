@@ -1,0 +1,25 @@
+<p-card header="Entrega">
+  <div class="flex-card">
+    <section *ngIf="user" class="line-height-3">
+      <span class="font-semibold">Endereço:</span>
+      <div>{{ user.address.street }} {{ user.address.number }}</div>
+      <span>{{ user.address.city }} - {{ user.address.zipcode }}</span>
+    </section>
+    <p-button [text]="true"
+              icon="pi pi-pencil"
+              routerLink="/user"/>
+  </div>
+
+  <ec-radio-button-card *ngFor="let shippingMethod of shippingMethods"
+                        [(selectedValue)]="selectedShippingMethod"
+                        [inputId]="shippingMethod.name"
+                        [radioButtonValue]="shippingMethod.name">
+    <div ecTemplate="left">
+      <div>{{ shippingMethod.name }}</div>
+      <span class="text-sm">Chegará até {{ shippingMethod.date | date }}</span>
+    </div>
+    <div class="font-semibold" ecTemplate="right">
+      <span>{{ isNumber(shippingMethod.price) ? (shippingMethod.price | currency) : shippingMethod.price }}</span>
+    </div>
+  </ec-radio-button-card>
+</p-card>

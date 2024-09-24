@@ -27,13 +27,6 @@ app-navbar {
   width: 45px;
 }
 
-.ec-card-header {
-  display: block;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 1.5rem 1.5rem 0 1.5rem;
-}
-
 .overflow-hidden {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -41,4 +34,16 @@ app-navbar {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+}
+
+.flex-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--border-radius);
+  border-color: var(--surface-border);
+  padding: 1rem;
+  margin-top: 1rem;
 }

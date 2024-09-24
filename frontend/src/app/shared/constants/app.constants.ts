@@ -6,7 +6,7 @@ export const MESSAGES = {
 
 export const ORDER_STEPS = [
   {label: 'Carrinho'},
+  {label: 'Entrega'},
   {label: 'Pagamento'},
   {label: 'Confirmação'},
-  {label: 'Concluir'},
 ];

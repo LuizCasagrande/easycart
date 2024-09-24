@@ -12,7 +12,7 @@
         <div [title]="product.title" class="text-base overflow-hidden">{{ product.title }}</div>
       </div>
     </div>
-    <div class="flex flex-column lg:align-items-end justify-content-center">
+    <div class="flex flex-column justify-content-center lg:align-items-end">
       <span class="text-lg font-semibold py-3">{{ product.price | currency }}</span>
       <p-button (onClick)="onAdd.emit(product.id)"
                 [outlined]="true"

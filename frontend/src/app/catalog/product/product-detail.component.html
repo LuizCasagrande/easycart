@@ -8,7 +8,7 @@
   </ec-header-actions>
 
   <div class="flex flex-wrap xl:flex-nowrap">
-    <div class="w-full lg:w-auto text-center sm:text-left">
+    <div class="text-center sm:text-left w-full lg:w-auto">
       <div class="flex align-items-center gap-1 py-2">
         <i class="pi pi-tag"></i>
         <span class="text-sm text-600">{{ product.category }}</span>
@@ -19,14 +19,14 @@
                styleClass="border-1 surface-border border-round"
                width="350"/>
     </div>
-    <div class="flex flex-column justify-content-between w-full p-0 pt-2 xl:pt-5 xl:pl-3">
-      <div [title]="product.description" class="text-base overflow-hidden">{{ product.description }}</div>
-      <div class="flex justify-content-between xl:justify-content-end align-items-end gap-4">
+    <div class="flex flex-column justify-content-between p-0 pt-2 xl:pt-5 xl:pl-3 xl:pb-1 w-full">
+      <div [title]="product.description" class="text-base">{{ product.description }}</div>
+      <div class="flex justify-content-between xl:justify-content-start align-items-end gap-5">
         <ec-field inputId="quantity" label="Quantidade">
-          <p-inputNumber [(ngModel)]="quantity"
+          <p-inputNumber [(ngModel)]="product.quantity"
                          [max]="10"
                          [min]="1"
-                         [prefix]="quantity < 10 ? '0' : ''"
+                         [prefix]="product.quantity! < 10 ? '0' : ''"
                          [showButtons]="true"
                          buttonLayout="horizontal"
                          decrementButtonIcon="pi pi-minus"
@@ -39,7 +39,8 @@
           <p-button (onClick)="addToCart()"
                     [outlined]="true"
                     icon="pi pi-shopping-cart"
-                    label="Comprar"/>
+                    label="Comprar"
+                    styleClass="w-12rem"/>
         </div>
       </div>
     </div>

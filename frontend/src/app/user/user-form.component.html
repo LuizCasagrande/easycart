@@ -1,15 +1,5 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-  <p-card>
-    <p-header class="ec-card-header">
-      <div class="flex align-items-center">
-        <span>Usuário</span>
-        <div *ngIf="USER_TYPE.MANAGER === form.get('type')?.value">
-          &nbsp;
-          <p-tag [value]="'#' + form.get('type')?.value"/>
-        </div>
-      </div>
-    </p-header>
-
+  <p-card header="Usuário">
     <ec-header-actions>
       <div ecTemplate="left">
         <p-button [text]="true"
@@ -22,6 +12,10 @@
                   type="submit"/>
       </div>
     </ec-header-actions>
+
+    <div *ngIf="USER_TYPE.MANAGER === form.get('type')?.value">
+      <p-tag [value]="'#' + USER_TYPE.MANAGER"/>
+    </div>
 
     <ec-field inputId="name" label="Nome">
       <input formControlName="name"
