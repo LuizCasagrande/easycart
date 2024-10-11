@@ -47,3 +47,9 @@ app-navbar {
   padding: 1rem;
   margin-top: 1rem;
 }
+
+@media screen and (min-width: 1700px) {
+  .xxl\:w-9 {
+    width: 75% !important;
+  }
+}

@@ -3,7 +3,11 @@
     <div class="col-6 text-left p-0">
       <p-iconField iconPosition="left">
         <p-inputIcon styleClass="pi pi-search"/>
-        <input pInputText placeholder="Pesquisar" type="text"/>
+        <input (ngModelChange)="queryUpdate.next($event)"
+               [(ngModel)]="query"
+               pInputText
+               placeholder="Pesquisar"
+               type="text"/>
       </p-iconField>
     </div>
     <div class="col-6 text-right p-0">

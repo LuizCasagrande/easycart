@@ -5,7 +5,8 @@
               layout="grid">
     <ng-template pTemplate="header">
       <div class="flex justify-content-between">
-        <p-multiSelect [(ngModel)]="selectedCategories"
+        <p-multiSelect (onChange)="load()"
+                       [(ngModel)]="selectedCategories"
                        [options]="categories"
                        emptyFilterMessage="Vazio"
                        emptyMessage="Vazio"

@@ -4,6 +4,7 @@ import {catchError, finalize, Observable, of} from "rxjs";
 import {PageResponse} from "./page-response";
 import {MessageService} from "primeng/api";
 import {Err} from "../../shared/err";
+import {Pageable} from "../../shared/pageable";
 
 @Directive()
 export abstract class CrudList<T> {
@@ -36,7 +37,7 @@ export abstract class CrudList<T> {
       });
   }
 
-  protected getPageable(): { page: number, size: number, sort: string } {
+  protected getPageable(): Pageable {
     let page = 0;
     let size = 10;
     let sort = 'id,asc';

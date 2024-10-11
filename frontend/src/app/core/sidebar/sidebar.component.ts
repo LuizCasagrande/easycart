@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SidebarService} from "./sidebar.service";
 import {MenuItem} from "primeng/api";
 import {UserService} from "../../user/user.service";
@@ -9,21 +9,14 @@ import {combineLatest} from "rxjs";
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
 
   visible = false;
   protected items: MenuItem[] = [];
 
   constructor(private readonly sidebarService: SidebarService,
               private readonly userService: UserService) {
-    combineLatest([
-      this.userService.userSubject,
-      this.sidebarService.sidebarSubject,
-    ]).subscribe(r => {
-      const user = r[0];
-      const visible = r[1];
-      this.visible = UserType.MANAGER === user?.type && visible;
-    });
+    this.onWindowResize();
     this.items = [{
       label: 'Início',
       items: [{
@@ -39,5 +32,24 @@ export class SidebarComponent {
         routerLink: '/management/product',
       }],
     }];
+  }
+
+  ngOnInit(): void {
+    combineLatest([
+      this.userService.userSubject,
+      this.sidebarService.sidebarSubject,
+    ]).subscribe(r => {
+      const user = r[0];
+      const visible = r[1];
+      this.visible = UserType.MANAGER === user?.type && visible;
+    });
+  }
+
+  private onWindowResize() {
+    window.addEventListener('resize', () => {
+      if (1500 > window.innerWidth) {
+        this.sidebarService.hide();
+      }
+    });
   }
 }

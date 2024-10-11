@@ -2,11 +2,11 @@
 <app-navbar #navbar/>
 <app-sidebar #sidebar/>
 
-<div [ngClass]="{'sidebar-padding': sidebar.visible}" class="h-full mx-0 md:mx-8">
-  <div *ngIf="navbar.visible()" class="h-6rem"></div>
+<div [ngClass]="{'sidebar-padding': sidebar.visible}" class="h-full w-12 sm:w-11 xxl:w-9 m-auto">
+  <div *ngIf="navbar.visible()" class="h-7rem"></div>
   <app-breadcrumb/>
   <router-outlet/>
-  <div *ngIf="navbar.visible()" class="h-2rem"></div>
+  <div *ngIf="navbar.visible()" class="h-3rem"></div>
 </div>
 
 <p-toast [preventOpenDuplicates]="true"

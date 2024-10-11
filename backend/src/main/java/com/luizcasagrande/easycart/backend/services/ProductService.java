@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService implements CrudService<Product> {
@@ -21,15 +23,22 @@ public class ProductService implements CrudService<Product> {
         return productRepository;
     }
 
-    public Set<String> findAllCategories() {
-        return productRepository.findAllCategories();
-    }
-
-    public Page<Product> findByCategory(String category, Pageable pageable) {
-        return productRepository.findByCategory(category, pageable);
+    public Page<Product> findAll(String query, Pageable pageable) {
+        if (isNotBlank(query)) {
+            return productRepository.findAll(query, pageable);
+        }
+        return CrudService.super.findAll(pageable);
     }
 
     public Set<Product> findByIdIn(Set<Long> id) {
         return productRepository.findByIdIn(id);
+    }
+
+    public Set<String> findAllCategories() {
+        return productRepository.findAllCategories();
+    }
+
+    public Page<Product> findByCategoryIn(Set<String> categories, Pageable pageable) {
+        return productRepository.findByCategoryIn(categories, pageable);
     }
 }

@@ -24,12 +24,18 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.productService.findAllCategories()
       .pipe(catchError(Err.handle(this.messageService)))
       .subscribe(r => this.categories = r);
+    this.load();
+  }
 
-    this.productService.findAll({page: 0, size: 20, sort: 'id,asc'})
+  protected load() {
+    const pageable = {page: 0, size: 20, sort: 'id,asc'};
+    this.loading = true;
+    (this.selectedCategories.length > 0
+      ? this.productService.findByCategoryIn(pageable, this.selectedCategories)
+      : this.productService.findAll(pageable))
       .pipe(
         catchError(Err.handle(this.messageService)),
         finalize(() => this.loading = false),
@@ -37,7 +43,7 @@ export class CatalogComponent implements OnInit {
       .subscribe(r => this.products = r.content);
   }
 
-  addToCart(productId: number): void {
+  protected addToCart(productId: number): void {
     this.cartService.add(productId);
     this.messageService.add(MESSAGES.ADDED_TO_CART);
   }
