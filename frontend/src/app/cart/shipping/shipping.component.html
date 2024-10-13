@@ -13,6 +13,7 @@
   <ec-radio-button-card *ngFor="let shippingMethod of shippingMethods"
                         [(selectedValue)]="selectedShippingMethod"
                         [inputId]="shippingMethod.name"
+                        [ngClass]="{'p-disabled': shippingMethods[1] === shippingMethod}"
                         [radioButtonValue]="shippingMethod.name">
     <div ecTemplate="left">
       <div>{{ shippingMethod.name }}</div>

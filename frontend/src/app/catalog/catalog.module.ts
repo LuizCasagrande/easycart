@@ -14,18 +14,18 @@ import {FieldModule} from "../shared/field/field.module";
 import {InputNumberModule} from "primeng/inputnumber";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DataViewModule,
-        Button,
-        MultiSelectModule,
-        FormsModule,
-        DropdownModule,
-        ProductModule,
-        RouterLink,
-        FieldModule,
-        InputNumberModule,
-    ],
+  imports: [
+    CommonModule,
+    DataViewModule,
+    Button,
+    MultiSelectModule,
+    FormsModule,
+    DropdownModule,
+    ProductModule,
+    RouterLink,
+    FieldModule,
+    InputNumberModule,
+  ],
   declarations: [
     CatalogComponent,
     CatalogListComponent,

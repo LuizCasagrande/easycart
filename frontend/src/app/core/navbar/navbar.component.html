@@ -11,11 +11,14 @@
   <div>
     <p-iconField iconPosition="left">
       <p-inputIcon styleClass="pi pi-search text-white"/>
-      <input maxlength="50"
+      <input (ngModelChange)="productSearchService.search($event)"
+             [(ngModel)]="search"
+             maxlength="50"
              pInputText
              placeholder="Pesquisar"
              type="text"/>
     </p-iconField>
+    <app-product-search (onSelect)="search = ''"/>
   </div>
   <div>
     <p-menu #menu [model]="items" [popup]="true"/>

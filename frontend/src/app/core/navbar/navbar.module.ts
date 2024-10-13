@@ -6,6 +6,8 @@ import {MenuModule} from "primeng/menu";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {InputTextModule} from "primeng/inputtext";
+import {FormsModule} from "@angular/forms";
+import {ProductSearchModule} from "../../catalog/product-search/product-search.module";
 
 @NgModule({
   imports: [
@@ -15,6 +17,8 @@ import {InputTextModule} from "primeng/inputtext";
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    FormsModule,
+    ProductSearchModule,
   ],
   declarations: [
     NavbarComponent,

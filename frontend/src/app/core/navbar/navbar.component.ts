@@ -8,6 +8,7 @@ import {SidebarService} from "../sidebar/sidebar.service";
 import {catchError} from "rxjs";
 import {Err} from "../../shared/err";
 import {CartService} from "../../cart/cart.service";
+import {ProductSearchService} from "../../catalog/product-search/product-search.service";
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
   cartSize = 0;
   enableDarkTheme = false;
+  search = '';
   protected readonly USER_TYPE = UserType;
   protected user!: User;
   protected items: MenuItem[] = [];
@@ -25,6 +27,7 @@ export class NavbarComponent implements OnInit {
               private readonly userService: UserService,
               private readonly cartService: CartService,
               private readonly sidebarService: SidebarService,
+              protected readonly productSearchService: ProductSearchService,
               private readonly confirmationService: ConfirmationService,
               private readonly messageService: MessageService,
               private readonly router: Router) {

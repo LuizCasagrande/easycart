@@ -1,0 +1,21 @@
+<p-dialog [(visible)]="visible"
+          [dismissableMask]="true"
+          [modal]="true"
+          [style]="{'width': '30rem', 'margin-top': '3.5rem'}"
+          position="top"
+          styleClass="border-1 surface-border border-round">
+  <ng-template pTemplate="headless">
+    <div (click)="select()"
+         *ngFor="let product of products; let first = first"
+         [ngClass]="{'border-top-1 surface-border': !first}"
+         class="text-900 cursor-pointer p-2 py-3"
+         routerLink="/product/{{product.id}}">
+      <div class="flex flex-wrap align-items-center">
+        <img [alt]="product.title"
+             [src]="product.image"
+             class="border-round cursor-pointer max-w-2rem">
+        <div [title]="product.title" class="text-base overflow-hidden pl-2">{{ product.title }}</div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
