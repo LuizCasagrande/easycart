@@ -1,27 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {filter, map, Observable} from "rxjs";
-import {NavigationEnd, Router} from "@angular/router";
+import {EasyCartService} from "../../shared/easy-cart.service";
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent {
 
   protected home: MenuItem = {icon: 'pi pi-home', routerLink: '/catalog'};
   protected items: MenuItem[] = [];
-  private url$!: Observable<string>;
 
-  constructor(private readonly router: Router) {
-    this.url$ = this.router.events.pipe(
-      filter((event: any) => event instanceof NavigationEnd),
-      map((event: NavigationEnd) => event.urlAfterRedirects),
-    );
-  }
-
-  ngOnInit(): void {
-    this.url$.subscribe(url => {
+  constructor(private readonly easyCartService: EasyCartService) {
+    this.easyCartService.onNavigationEnd().subscribe(url => {
       this.items = [];
       if (url.startsWith('/management')) {
         const items = url.split('/');

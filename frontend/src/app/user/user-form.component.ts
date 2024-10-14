@@ -2,11 +2,9 @@ import {Component} from '@angular/core';
 import {UserService} from "./user.service";
 import {BaseForm} from "../core/framework/base-form";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {catchError, finalize} from "rxjs";
-import {Err} from "../shared/err";
-import {LoaderService} from "../shared/loader/loader.service";
-import {MessageService} from "primeng/api";
 import {User, UserType} from "./user";
+import {EasyCartService} from "../shared/easy-cart.service";
+import {MESSAGES} from "../shared/constants/app.constants";
 
 @Component({
   selector: 'app-user-form',
@@ -16,37 +14,14 @@ export class UserFormComponent extends BaseForm {
 
   protected readonly USER_TYPE = UserType;
 
-  constructor(private readonly userService: UserService,
-              private readonly loaderService: LoaderService,
-              private readonly messageService: MessageService) {
+  constructor(private readonly ecService: EasyCartService,
+              private readonly userService: UserService) {
     super();
-    this.createFormGroup();
-    this.userService.findLoggedIn()
-      .pipe(
-        catchError(Err.handle(this.messageService)),
-        finalize(() => this.loaderService.hide()),
-      )
+    this.ecService.executeRequest(this.userService.findLoggedIn())
       .subscribe(r => this.form.patchValue(r));
   }
 
-  override submit(): void {
-    this.loaderService.show();
-    this.userService.update(<User>this.form.value)
-      .pipe(
-        catchError(Err.handle(this.messageService)),
-        finalize(() => this.loaderService.hide()),
-      )
-      .subscribe(r => {
-        this.form.patchValue(r);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Usuário atualizado.',
-        });
-      });
-  }
-
-  private createFormGroup(): void {
+  protected override createFormGroup(): void {
     this.form = new FormGroup({
       id: new FormControl(''),
       type: new FormControl(''),
@@ -60,5 +35,13 @@ export class UserFormComponent extends BaseForm {
         zipcode: new FormControl('', Validators.required),
       }),
     });
+  }
+
+  protected override submit(): void {
+    this.ecService.executeRequest(this.userService.update(<User>this.form.value))
+      .subscribe(r => {
+        this.form.patchValue(r);
+        this.ecService.addMessage(MESSAGES.USER_UPDATED);
+      });
   }
 }

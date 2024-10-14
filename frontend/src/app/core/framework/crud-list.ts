@@ -1,10 +1,10 @@
 import {Directive, Injector, ViewChild} from "@angular/core";
 import {Table} from "primeng/table";
-import {catchError, finalize, Observable, of} from "rxjs";
+import {Observable, of} from "rxjs";
 import {PageResponse} from "./page-response";
-import {MessageService} from "primeng/api";
-import {Err} from "../../shared/err";
 import {Pageable} from "../../shared/pageable";
+import {EasyCartService} from "../../shared/easy-cart.service";
+import {ConfirmationService} from "primeng/api";
 
 @Directive()
 export abstract class CrudList<T> {
@@ -14,23 +14,32 @@ export abstract class CrudList<T> {
   protected value: T[] = [];
   protected totalRecords = 0;
   protected loading = false;
-  protected messageService: MessageService;
+  protected ecService: EasyCartService;
+  protected confirmationService: ConfirmationService;
 
   protected constructor(protected readonly injector: Injector) {
-    this.messageService = this.injector.get(MessageService);
+    this.ecService = this.injector.get(EasyCartService);
+    this.confirmationService = this.injector.get(ConfirmationService);
   }
 
-  findAll(): Observable<PageResponse<T>> {
+  protected findAll(): Observable<PageResponse<T>> {
     return of();
+  }
+
+  protected remove(id: number): void {
+  }
+
+  protected onRemove(id: number): void {
+    this.confirmationService.confirm({
+      header: 'Confirmação',
+      message: 'Tem certeza que deseja remover?',
+      accept: () => this.remove(id),
+    });
   }
 
   protected load(): void {
     this.loading = true;
-    this.findAll()
-      .pipe(
-        catchError(Err.handle(this.messageService)),
-        finalize(() => this.loading = false),
-      )
+    this.ecService.executeRequest(this.findAll(), false, () => this.loading = false)
       .subscribe(r => {
         this.value = r.content;
         this.totalRecords = r.page.totalElements;

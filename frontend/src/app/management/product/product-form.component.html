@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-  <p-card [header]="'Produto ' + (getId() ? '#' + getId() : '')">
+  <p-card [header]="'Produto ' + (id ? '#' + id : '')">
     <ec-header-actions>
       <div ecTemplate="left">
         <p-button [text]="true"
@@ -59,9 +59,9 @@
              maxlength="250"
              pInputText
              type="text"/>
-      <p-image *ngIf="form.get('image')?.value"
+      <p-image *ngIf="getValue('image')"
                [preview]="true"
-               [src]="form.get('image')?.value"
+               [src]="getValue('image')"
                alt="Image"
                width="250"/>
     </ec-field>

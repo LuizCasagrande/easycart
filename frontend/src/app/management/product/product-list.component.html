@@ -3,7 +3,7 @@
     <div class="col-6 text-left p-0">
       <p-iconField iconPosition="left">
         <p-inputIcon styleClass="pi pi-search"/>
-        <input (ngModelChange)="queryUpdate.next($event)"
+        <input (ngModelChange)="query$.next($event)"
                [(ngModel)]="query"
                pInputText
                placeholder="Pesquisar"
@@ -58,7 +58,7 @@
           <p-button [routerLink]="product.id"
                     [text]="true"
                     icon="pi pi-pencil"/>
-          <p-button (onClick)="remove(product.id)"
+          <p-button (onClick)="onRemove(product.id)"
                     [text]="true"
                     icon="pi pi-trash"/>
         </td>

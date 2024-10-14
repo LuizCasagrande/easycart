@@ -3,7 +3,8 @@
           [modal]="true"
           [style]="{'width': '30rem', 'margin-top': '3.5rem'}"
           position="top"
-          styleClass="border-1 surface-border border-round">
+          styleClass="border-1 surface-border border-round"
+          transitionOptions="0s">
   <ng-template pTemplate="headless">
     <div (click)="select()"
          *ngFor="let product of products; let first = first"

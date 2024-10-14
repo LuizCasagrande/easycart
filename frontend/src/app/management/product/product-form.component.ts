@@ -1,14 +1,10 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "./product.service";
 import {BaseForm} from "../../core/framework/base-form";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Product} from "./product";
-import {MessageService} from "primeng/api";
-import {catchError, finalize} from "rxjs";
-import {Err} from "../../shared/err";
-import {LoaderService} from "../../shared/loader/loader.service";
 import {MESSAGES} from "../../shared/constants/app.constants";
+import {EasyCartService} from "../../shared/easy-cart.service";
 
 @Component({
   selector: 'app-product-form',
@@ -18,63 +14,43 @@ export class ProductFormComponent extends BaseForm {
 
   protected categories: string[] = [];
 
-  constructor(private readonly productService: ProductService,
-              private readonly loaderService: LoaderService,
-              private readonly messageService: MessageService,
-              private readonly activatedRoute: ActivatedRoute,
-              private readonly router: Router) {
+  constructor(private readonly ecService: EasyCartService,
+              private readonly productService: ProductService) {
     super();
-    this.createFormGroup();
-    if (this.getId()) {
-      this.loaderService.show();
-      this.productService.findById(this.getId())
-        .pipe(
-          catchError(Err.handle(this.messageService)),
-          finalize(() => this.loaderService.hide()),
-        )
+    this.ecService.onChangeUrl(id => {
+      this.id = id;
+      this.ecService.executeRequest(this.productService.findById(id))
         .subscribe(r => this.form.patchValue(r));
-    }
+    });
   }
 
-  override submit(): void {
-    this.loaderService.show();
-    this.productService.save(<Product>this.form.value, this.getId())
-      .pipe(
-        catchError(Err.handle(this.messageService)),
-        finalize(() => this.loaderService.hide()),
-      )
-      .subscribe(r => {
-        this.router.navigateByUrl('management/product/' + r.id)
-          .then(() => {
-            this.form.patchValue(r);
-            this.messageService.add(MESSAGES.RECORD_SAVED);
-          });
-      });
-  }
-
-  getId(): number {
-    return Number(this.activatedRoute.snapshot.paramMap.get('id') || 0);
-  }
-
-  reset(): void {
-    this.router.navigateByUrl('management/product/new')
-      .then(() => this.createFormGroup());
-  }
-
-  protected findAllCategories() {
-    this.productService.findAllCategories()
-      .pipe(catchError(Err.handle(this.messageService)))
-      .subscribe(r => this.categories = r);
-  }
-
-  private createFormGroup(): void {
+  protected override createFormGroup() {
     this.form = new FormGroup({
       id: new FormControl(''),
-      title: new FormControl({value: '', disabled: !!this.getId()}, Validators.required),
+      title: new FormControl({value: '', disabled: !!this.id}, Validators.required),
       description: new FormControl('', Validators.required),
       price: new FormControl('0', [Validators.required, Validators.min(0.01)]),
       category: new FormControl('', Validators.required),
       image: new FormControl('', Validators.required),
     });
+  }
+
+  protected override submit(): void {
+    this.ecService.executeRequest(this.productService.save(<Product>this.form.value, this.id))
+      .subscribe(r => this.ecService.navigateByUrl('management/product/' + r.id)
+        .then(() => {
+          this.form.patchValue(r);
+          this.ecService.addMessage(MESSAGES.RECORD_SAVED);
+        }));
+  }
+
+  protected reset(): void {
+    this.ecService.navigateByUrl('management/product/new')
+      .then(() => this.createFormGroup());
+  }
+
+  protected findAllCategories() {
+    this.ecService.executeRequest(this.productService.findAllCategories(), false)
+      .subscribe(r => this.categories = r);
   }
 }

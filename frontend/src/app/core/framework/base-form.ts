@@ -5,16 +5,22 @@ import {FormGroup} from "@angular/forms";
 export abstract class BaseForm {
 
   protected form!: FormGroup;
+  protected id!: number;
 
-  submit(): void {
+  protected constructor() {
+    this.createFormGroup();
+  }
+
+  protected createFormGroup(): void {
+  }
+
+  protected submit(): void {
   }
 
   protected onSubmit(): void {
-    if (this.isValid()) {
-      this.submit()
-    } else {
-      this.validate();
-    }
+    this.isValid()
+      ? this.submit()
+      : this.validate();
   }
 
   protected isValid(): boolean {
@@ -27,5 +33,9 @@ export abstract class BaseForm {
       this.form.get(key)!.markAsTouched();
       this.form.get(key)!.updateValueAndValidity();
     }
+  }
+
+  protected getValue(path: string): any {
+    return this.form.get(path)?.value;
   }
 }
