@@ -1,10 +1,11 @@
 import {Directive, Injector, ViewChild} from "@angular/core";
 import {Table} from "primeng/table";
-import {Observable, of} from "rxjs";
+import {debounceTime, distinctUntilChanged, Observable, of, Subject} from "rxjs";
 import {PageResponse} from "./page-response";
 import {Pageable} from "../../shared/pageable";
 import {EasyCartService} from "../../shared/easy-cart.service";
 import {ConfirmationService} from "primeng/api";
+import {MESSAGES} from "../../shared/constants/app.constants";
 
 @Directive()
 export abstract class CrudList<T> {
@@ -14,26 +15,36 @@ export abstract class CrudList<T> {
   protected value: T[] = [];
   protected totalRecords = 0;
   protected loading = false;
+  protected query = '';
+  protected query$ = new Subject<string>();
   protected ecService: EasyCartService;
   protected confirmationService: ConfirmationService;
 
   protected constructor(protected readonly injector: Injector) {
     this.ecService = this.injector.get(EasyCartService);
     this.confirmationService = this.injector.get(ConfirmationService);
+
+    this.query$.pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => this.load());
   }
 
   protected findAll(): Observable<PageResponse<T>> {
     return of();
   }
 
-  protected remove(id: number): void {
+  protected remove(id: number): Observable<void> {
+    return of();
   }
 
   protected onRemove(id: number): void {
     this.confirmationService.confirm({
       header: 'Confirmação',
       message: 'Tem certeza que deseja remover?',
-      accept: () => this.remove(id),
+      accept: () => this.ecService.executeRequest(this.remove(id))
+        .subscribe(() => {
+          this.load();
+          this.ecService.addMessage(MESSAGES.RECORD_REMOVED);
+        }),
     });
   }
 

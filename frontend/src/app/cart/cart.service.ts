@@ -1,31 +1,28 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {CART} from "../shared/constants/app.constants";
+import {CartPaymentMethod} from "./cart-payment-method";
 
 @Injectable()
 export class CartService {
 
-  cartChangeEvent = new BehaviorSubject<number>(0);
-  private readonly cart = 'cart';
+  readonly cartSize$ = new BehaviorSubject<number>(0);
+  readonly shipping$ = new BehaviorSubject<string>('Entrega Econômica');
+  readonly payment$ = new BehaviorSubject<CartPaymentMethod>(CartPaymentMethod.PIX);
 
-  add(productId: number, quantity?: number): void {
+  add(productId: number, quantity: number = 1): void {
     const cart = this.getCart();
-    quantity = quantity || 1;
-
-    const currentQuantity = cart.get(productId.toString());
-    if (currentQuantity != null) {
-      quantity += currentQuantity;
-    }
-
+    quantity += cart.get(productId.toString()) || 0;
     cart.set(productId.toString(), quantity);
     this.setCart(cart);
-    this.cartChangeEvent.next(cart.size);
+    this.cartSize$.next(cart.size);
   }
 
   remove(productId: number): void {
     const cart = this.getCart();
     cart.delete(productId.toString());
     this.setCart(cart);
-    this.cartChangeEvent.next(cart.size);
+    this.cartSize$.next(cart.size);
   }
 
   getCartSize(): number {
@@ -33,10 +30,10 @@ export class CartService {
   }
 
   getCart(): Map<string, number> {
-    return new Map(JSON.parse(localStorage.getItem(this.cart) || '[]'));
+    return new Map(JSON.parse(localStorage.getItem(CART) || '[]'));
   }
 
   private setCart(cart: Map<string, number>): void {
-    localStorage.setItem(this.cart, JSON.stringify(Array.from(cart.entries())));
+    localStorage.setItem(CART, JSON.stringify(Array.from(cart.entries())));
   }
 }

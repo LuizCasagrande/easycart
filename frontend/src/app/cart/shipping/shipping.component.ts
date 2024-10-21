@@ -1,5 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from "../../user/user";
+import {CartService} from "../cart.service";
+import {UserService} from "../../user/user.service";
+import {SHIPPING_METHODS} from "../../shared/constants/app.constants";
 
 @Component({
   selector: 'app-shipping',
@@ -7,41 +10,17 @@ import {User} from "../../user/user";
 })
 export class ShippingComponent {
 
-  @Input()
-  user!: User;
+  protected selected = '';
+  protected user!: User;
+  protected readonly SHIPPING_METHODS = SHIPPING_METHODS;
 
-  protected selectedShippingMethod!: string;
-
-  protected shippingMethods: ShippingMethod[] = [
-    {
-      name: 'Entrega Econômica',
-      date: this.getNowPlusDays(7),
-      price: 'Grátis',
-    },
-    {
-      name: 'Entrega Expressa',
-      date: this.getNowPlusDays(3),
-      price: '19.53',
-    },
-  ];
-
-  constructor() {
-    this.selectedShippingMethod = this.shippingMethods[0].name;
+  constructor(private readonly userService: UserService,
+              private readonly cartService: CartService) {
+    this.userService.userSubject.subscribe(r => this.user = r);
+    this.cartService.shipping$.subscribe(r => this.selected = r);
   }
 
-  getNowPlusDays(days: number): Date {
-    const date = new Date();
-    date.setDate(date.getDate() + days);
-    return date;
+  protected onSelect(value: string): void {
+    this.cartService.shipping$.next(value);
   }
-
-  isNumber(value: string): boolean {
-    return !isNaN(Number(value));
-  }
-}
-
-export interface ShippingMethod {
-  name: string;
-  date: Date;
-  price: string;
 }

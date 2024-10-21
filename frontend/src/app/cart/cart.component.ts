@@ -3,11 +3,10 @@ import {ORDER_STEPS} from "../shared/constants/app.constants";
 import {CartService} from "./cart.service";
 import {ProductService} from "../management/product/product.service";
 import {Product} from "../management/product/product";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService} from "primeng/api";
 import {User} from "../user/user";
 import {UserService} from "../user/user.service";
-import {catchError} from "rxjs";
-import {Err} from "../shared/err";
+import {EasyCartService} from "../shared/easy-cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -16,55 +15,51 @@ import {Err} from "../shared/err";
 export class CartComponent implements OnInit {
 
   steps = ORDER_STEPS;
-  cart = new Map<string, number>();
-  products: Product[] = [];
   activeIndex = 0;
   user!: User;
+  cart = this.cartService.getCart();
+  products: Product[] = [];
 
-  constructor(private readonly cartService: CartService,
+  constructor(private readonly ecService: EasyCartService,
+              private readonly cartService: CartService,
               private readonly productService: ProductService,
               private readonly userService: UserService,
-              private readonly messageService: MessageService,
               private readonly confirmationService: ConfirmationService) {
-    this.cartService.cartChangeEvent
+    this.cartService.cartSize$
       .subscribe(() => this.cart = this.cartService.getCart());
   }
 
   ngOnInit(): void {
-    this.cart = this.cartService.getCart()
-    for (let productId of this.cart.keys()) {
-      this.productService.findById(Number(productId))
-        .subscribe(p => {
-          p.quantity = this.getQuantity(p.id);
-          this.products.push(p);
-        });
-    }
-
-    this.userService.findLoggedIn()
-      .pipe(catchError(Err.handle(this.messageService)))
+    this.ecService.executeRequest(this.userService.findLoggedIn(), false)
       .subscribe(u => this.user = u);
+
+    this.cart.forEach((quantity, productId) => this.ecService
+      .executeRequest(this.productService.findById(Number(productId)), false)
+      .subscribe(p => {
+        p.quantity = quantity;
+        this.products.push(p)
+      }));
   }
 
-  remove(productId: number): void {
+  protected remove(productId: number): void {
     this.confirmationService.confirm({
-      header: 'Confirmação',
       message: 'Tem certeza que deseja remover?',
       accept: () => {
         this.cartService.remove(productId);
-        this.products = this.products.filter(p => p.id !== productId);
+        this.products = this.products.filter(p => productId !== p.id);
       },
     });
   }
 
-  getTotal(): number {
-    return this.products.reduce((total, product) => total + (product.price * product.quantity!), 0);
+  protected getTotal(): number {
+    return this.products.reduce((total, p) => total + (p.price * p.quantity!), 0);
   }
 
-  onChangeQuantity(productId: number, newQuantity: number): void {
-    this.cartService.add(productId, newQuantity - this.getQuantity(productId));
-  }
-
-  private getQuantity(productId: number): number {
+  protected getQuantity(productId: number): number {
     return this.cart.get(String(productId))!;
+  }
+
+  protected setQuantity(productId: number, newQuantity: number): void {
+    this.cartService.add(productId, newQuantity - this.getQuantity(productId));
   }
 }

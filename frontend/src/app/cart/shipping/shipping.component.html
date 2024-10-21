@@ -10,17 +10,19 @@
               routerLink="/user"/>
   </div>
 
-  <ec-radio-button-card *ngFor="let shippingMethod of shippingMethods"
-                        [(selectedValue)]="selectedShippingMethod"
-                        [inputId]="shippingMethod.name"
-                        [ngClass]="{'p-disabled': shippingMethods[1] === shippingMethod}"
-                        [radioButtonValue]="shippingMethod.name">
+  <ec-radio-button-card (selectedValueChange)="onSelect($event)"
+                        *ngFor="let method of SHIPPING_METHODS"
+                        [(selectedValue)]="selected"
+                        [inputId]="method.name"
+                        [radioButtonValue]="method.name">
     <div ecTemplate="left">
-      <div>{{ shippingMethod.name }}</div>
-      <span class="text-sm">Chegará até {{ shippingMethod.date | date }}</span>
+      <div>{{ method.name }}</div>
+      <span class="text-sm">Chegará até {{ method.date | date }}</span>
     </div>
     <div class="font-semibold" ecTemplate="right">
-      <span>{{ isNumber(shippingMethod.price) ? (shippingMethod.price | currency) : shippingMethod.price }}</span>
+      <span>{{ method.price > 0 ? (method.price | currency) : 'Grátis' }}</span>
     </div>
   </ec-radio-button-card>
 </p-card>
+
+<!-- [ngClass]="{'p-disabled': shippingMethods[1] === shippingMethod}" -->

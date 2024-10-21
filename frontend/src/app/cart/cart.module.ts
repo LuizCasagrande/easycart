@@ -14,6 +14,7 @@ import {PaymentComponent} from './payment/payment.component';
 import {ShippingComponent} from './shipping/shipping.component';
 import {RadioButtonCardModule} from "../shared/radio-button-card/radio-button-card.module";
 import {HeaderActionsModule} from "../shared/header-actions/header-actions.module";
+import {ConfirmationComponent} from './confirmation/confirmation.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import {HeaderActionsModule} from "../shared/header-actions/header-actions.modul
     CartComponent,
     PaymentComponent,
     ShippingComponent,
+    ConfirmationComponent,
   ],
   exports: [
     CartComponent,

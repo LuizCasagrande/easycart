@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
               private readonly router: Router) {
     this.loginService.setTokenEvent
       .subscribe(() => this.findUserAndCart());
-    this.cartService.cartChangeEvent
+    this.cartService.cartSize$
       .subscribe(r => this.cartSize = r);
   }
 
