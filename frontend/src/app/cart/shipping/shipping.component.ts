@@ -1,8 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from "../../user/user";
-import {CartService} from "../cart.service";
-import {UserService} from "../../user/user.service";
-import {SHIPPING_METHODS} from "../../shared/constants/app.constants";
+import {nowPlusDays} from "../../shared/utils";
 
 @Component({
   selector: 'app-shipping',
@@ -10,17 +8,22 @@ import {SHIPPING_METHODS} from "../../shared/constants/app.constants";
 })
 export class ShippingComponent {
 
-  protected selected = '';
-  protected user!: User;
-  protected readonly SHIPPING_METHODS = SHIPPING_METHODS;
+  @Input()
+  user!: User;
 
-  constructor(private readonly userService: UserService,
-              private readonly cartService: CartService) {
-    this.userService.userSubject.subscribe(r => this.user = r);
-    this.cartService.shipping$.subscribe(r => this.selected = r);
-  }
+  @Input()
+  selected = '';
 
-  protected onSelect(value: string): void {
-    this.cartService.shipping$.next(value);
-  }
+  @Output()
+  selectedChange = new EventEmitter<string>();
+
+  protected readonly SHIPPING_METHODS = [{
+    name: 'Entrega Econômica',
+    date: nowPlusDays(7),
+    price: 0,
+  }, {
+    name: 'Entrega Expressa',
+    date: nowPlusDays(3),
+    price: 19.53,
+  }];
 }

@@ -8,8 +8,8 @@
 <div class="flex flex-wrap">
   <div [ngSwitch]="activeIndex" class="w-12 xl:w-9">
     <p-card *ngSwitchCase="0" header="Produtos">
-      <p-dataView *ngIf="products.length > 0 else emptyMessage"
-                  [value]="products"
+      <p-dataView *ngIf="cart.products.length > 0 else emptyMessage"
+                  [value]="cart.products"
                   sortField="id"
                   sortOrder="1">
         <ng-template let-products pTemplate="list">
@@ -56,16 +56,20 @@
       </p-dataView>
     </p-card>
 
-    <app-shipping *ngSwitchCase="1"></app-shipping>
-    <app-payment *ngSwitchCase="2"></app-payment>
-    <app-confirmation *ngSwitchCase="3"></app-confirmation>
+    <app-shipping *ngSwitchCase="1"
+                  [(selected)]="cart.shippingMethod"
+                  [user]="cart.user"/>
+    <app-payment *ngSwitchCase="2"
+                 [(selected)]="cart.paymentMethod"/>
+    <app-confirmation *ngSwitchCase="3"
+                      [user]="cart.user"/>
   </div>
 
   <div class="w-12 xl:w-3">
     <p-card header="Total" styleClass="mt-5 ml-0 xl:mt-0 xl:ml-5">
       <span class="text-lg font-semibold">{{ getTotal() | currency }}</span>
       <p-button (onClick)="activeIndex = activeIndex + 1"
-                [disabled]="products.length < 1"
+                [disabled]="0 === cart.products.length"
                 [outlined]="true"
                 label="Continuar"
                 styleClass="mt-3 w-full"/>

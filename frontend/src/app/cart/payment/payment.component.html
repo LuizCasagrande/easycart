@@ -1,14 +1,10 @@
 <p-card header="Forma de Pagamento">
-  <ec-radio-button-card (selectedValueChange)="onSelect($event)"
+  <ec-radio-button-card (valueChange)="selectedChange.emit($event)"
                         *ngFor="let method of PAYMENT_METHODS"
-                        [(selectedValue)]="selected"
-                        [inputId]="method"
-                        [radioButtonValue]="method">
-    <span ecTemplate="left">{{ method }}</span>
-    <div [ngSwitch]="method" ecTemplate="right">
-      <i *ngSwitchCase="CART_PAYMENT_METHOD.PIX" class="pi pi-money-bill"></i>
-      <i *ngSwitchCase="CART_PAYMENT_METHOD.BANK_SLIP" class="pi pi-barcode"></i>
-      <i *ngSwitchCase="CART_PAYMENT_METHOD.CREDIT_CARD" class="pi pi-credit-card"></i>
-    </div>
+                        [(value)]="selected"
+                        [inputId]="method.name"
+                        [radioButtonValue]="method.name">
+    <span ecTemplate="left">{{ method.name }}</span>
+    <i class="pi {{method.icon}}" ecTemplate="right"></i>
   </ec-radio-button-card>
 </p-card>

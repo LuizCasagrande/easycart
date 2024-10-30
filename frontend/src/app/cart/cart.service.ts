@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {CART} from "../shared/constants/app.constants";
-import {CartPaymentMethod} from "./cart-payment-method";
 
 @Injectable()
 export class CartService {
 
   readonly cartSize$ = new BehaviorSubject<number>(0);
-  readonly shipping$ = new BehaviorSubject<string>('Entrega Econômica');
-  readonly payment$ = new BehaviorSubject<CartPaymentMethod>(CartPaymentMethod.PIX);
 
   add(productId: number, quantity: number = 1): void {
     const cart = this.getCart();

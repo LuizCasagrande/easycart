@@ -10,10 +10,11 @@
               routerLink="/user"/>
   </div>
 
-  <ec-radio-button-card (selectedValueChange)="onSelect($event)"
+  <ec-radio-button-card (valueChange)="selectedChange.emit($event)"
                         *ngFor="let method of SHIPPING_METHODS"
-                        [(selectedValue)]="selected"
+                        [(value)]="selected"
                         [inputId]="method.name"
+                        [ngClass]="{'p-disabled': SHIPPING_METHODS[1] === method}"
                         [radioButtonValue]="method.name">
     <div ecTemplate="left">
       <div>{{ method.name }}</div>
@@ -24,5 +25,3 @@
     </div>
   </ec-radio-button-card>
 </p-card>
-
-<!-- [ngClass]="{'p-disabled': shippingMethods[1] === shippingMethod}" -->

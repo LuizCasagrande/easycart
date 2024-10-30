@@ -3,11 +3,7 @@
     <section *ngIf="user" class="line-height-3">
       <span class="font-semibold">{{ user.name }}</span>
       <div>Email: {{ user.email }}</div>
-      <span>Telefone: {{ user.phone }}</span>
+      <span>Telefone: {{ user.phone | phone }}</span>
     </section>
   </div>
 </p-card>
-<div class="flex flex-wrap mt-5">
-  <app-shipping class="w-6"></app-shipping>
-  <app-payment class="w-6 pl-5"></app-payment>
-</div>

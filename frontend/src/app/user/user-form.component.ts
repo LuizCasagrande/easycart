@@ -27,7 +27,7 @@ export class UserFormComponent extends BaseForm {
       type: new FormControl(''),
       name: new FormControl('', Validators.required),
       email: new FormControl({value: '', disabled: true}),
-      phone: new FormControl('', Validators.required),
+      phone: new FormControl('', [Validators.required, Validators.minLength(11)]),
       address: new FormGroup({
         number: new FormControl('', Validators.required),
         street: new FormControl('', Validators.required),

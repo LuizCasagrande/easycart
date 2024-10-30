@@ -15,6 +15,7 @@ import {ShippingComponent} from './shipping/shipping.component';
 import {RadioButtonCardModule} from "../shared/radio-button-card/radio-button-card.module";
 import {HeaderActionsModule} from "../shared/header-actions/header-actions.module";
 import {ConfirmationComponent} from './confirmation/confirmation.component';
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {ConfirmationComponent} from './confirmation/confirmation.component';
     RadioButtonModule,
     RadioButtonCardModule,
     HeaderActionsModule,
+    SharedModule,
   ],
   declarations: [
     CartComponent,

@@ -1,6 +1,4 @@
-import {Component} from '@angular/core';
-import {CartPaymentMethod} from "../cart-payment-method";
-import {CartService} from "../cart.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-payment',
@@ -8,15 +6,20 @@ import {CartService} from "../cart.service";
 })
 export class PaymentComponent {
 
-  protected selected = CartPaymentMethod.PIX;
-  protected readonly CART_PAYMENT_METHOD = CartPaymentMethod;
-  protected readonly PAYMENT_METHODS = Object.values(CartPaymentMethod);
+  @Input()
+  selected = '';
 
-  constructor(private readonly cartService: CartService) {
-    this.cartService.payment$.subscribe(r => this.selected = r);
-  }
+  @Output()
+  selectedChange = new EventEmitter<string>();
 
-  protected onSelect(value: string): void {
-    this.cartService.payment$.next(<CartPaymentMethod>value);
-  }
+  protected readonly PAYMENT_METHODS = [{
+    name: 'Pix',
+    icon: 'pi-money-bill',
+  }, {
+    name: 'Boleto Bancário',
+    icon: 'pi-barcode',
+  }, {
+    name: 'Cartão de Crédito',
+    icon: 'pi-credit-card',
+  }];
 }

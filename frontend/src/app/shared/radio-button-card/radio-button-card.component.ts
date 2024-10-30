@@ -13,8 +13,8 @@ export class RadioButtonCardComponent {
   radioButtonValue = '';
 
   @Input()
-  selectedValue = '';
+  value = '';
 
   @Output()
-  selectedValueChange = new EventEmitter<string>();
+  valueChange = new EventEmitter<string>();
 }
