@@ -3,7 +3,7 @@
                         *ngFor="let method of PAYMENT_METHODS"
                         [(value)]="selected"
                         [inputId]="method.name"
-                        [radioButtonValue]="method.name">
+                        [radioButtonValue]="method">
     <span ecTemplate="left">{{ method.name }}</span>
     <i class="pi {{method.icon}}" ecTemplate="right"></i>
   </ec-radio-button-card>

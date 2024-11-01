@@ -1,0 +1,43 @@
+<p-card header="Total" styleClass="mt-5 ml-0 xl:mt-0 xl:ml-5">
+  <span class="text-lg font-semibold">{{ total | currency }}</span>
+  <p-button (onClick)="onNavigate.emit(index + 1)"
+            [disabled]="!cart.products.length"
+            [outlined]="true"
+            label="Continuar"
+            styleClass="mt-3 w-full"/>
+  <p-button (onClick)="onNavigate.emit(index - 1)"
+            *ngIf="index"
+            [outlined]="true"
+            label="Voltar"
+            styleClass="p-button-danger mt-3 w-full"/>
+</p-card>
+
+<p-card *ngIf="3 === index"
+        header="Entrega"
+        styleClass="mt-5 ml-0 xl:ml-5">
+  <section *ngIf="cart" class="flex-card flex-wrap">
+    <div class="line-height-3">
+      <span class="font-semibold">Endereço:</span>
+      <div>{{ cart.user.address.street }} {{ cart.user.address.number }}</div>
+      <span>{{ cart.user.address.city }} - {{ cart.user.address.zipcode }}</span>
+    </div>
+    <p-button [text]="true"
+              icon="pi pi-pencil"
+              routerLink="/user"/>
+    <p-divider class="w-12"></p-divider>
+    <div class="flex flex-column">
+      <div>{{ cart.shippingMethod.name }}</div>
+      <span class="text-sm">Chegará até {{ cart.shippingMethod.date | date }}</span>
+    </div>
+    <span>{{ cart.shippingMethod.price > 0 ? (cart.shippingMethod.price | currency) : 'Grátis' }}</span>
+  </section>
+</p-card>
+
+<p-card *ngIf="3 === index"
+        header="Forma de Pagamento"
+        styleClass="mt-5 ml-0 xl:ml-5">
+  <section *ngIf="cart.paymentMethod" class="flex-card">
+    <span>{{ cart.paymentMethod.name }}</span>
+    <i class="pi {{ cart.paymentMethod.icon }}"></i>
+  </section>
+</p-card>

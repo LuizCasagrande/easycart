@@ -7,3 +7,38 @@
     </section>
   </div>
 </p-card>
+
+<div class="h-2rem"></div>
+
+<p-card header="Produtos">
+  <p-dataView *ngIf="products.length > 0"
+              [value]="products"
+              sortField="id"
+              sortOrder="1">
+    <ng-template let-products pTemplate="list">
+      <div *ngFor="let product of products; let first = first"
+           [ngClass]="{'border-top-1 surface-border': !first}"
+           class="py-3">
+        <div class="flex flex-wrap xl:flex-nowrap flex-column xl:flex-row justify-content-between">
+          <div class="flex flex-wrap xl:flex-nowrap align-items-center w-full">
+            <img [alt]="product.title"
+                 [src]="product.image"
+                 class="border-round max-w-9rem">
+            <div class="m-0 xl:mx-3 w-full">
+              <span class="text-sm text-600">{{ product.category }}</span>
+              <div [title]="product.title" class="text-base overflow-hidden">{{ product.title }}</div>
+            </div>
+          </div>
+          <div class="flex align-items-center w-full xl:w-24rem">
+            <div class="flex align-items-end justify-content-between w-full">
+              <span class="text-base">Quantidade: {{ product.quantity }}</span>
+              <div class="flex flex-column align-items-end justify-content-center">
+                <span class="text-lg font-semibold">{{ product.price | currency }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</p-card>

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from "../../user/user";
-import {nowPlusDays} from "../../shared/utils";
+import {SHIPPING_METHODS, ShippingMethod} from "../cart";
 
 @Component({
   selector: 'app-shipping',
@@ -12,18 +12,10 @@ export class ShippingComponent {
   user!: User;
 
   @Input()
-  selected = '';
+  selected: any;
 
   @Output()
-  selectedChange = new EventEmitter<string>();
+  selectedChange = new EventEmitter<ShippingMethod>();
 
-  protected readonly SHIPPING_METHODS = [{
-    name: 'Entrega Econômica',
-    date: nowPlusDays(7),
-    price: 0,
-  }, {
-    name: 'Entrega Expressa',
-    date: nowPlusDays(3),
-    price: 19.53,
-  }];
+  protected readonly SHIPPING_METHODS = SHIPPING_METHODS;
 }

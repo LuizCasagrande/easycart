@@ -16,6 +16,8 @@ import {RadioButtonCardModule} from "../shared/radio-button-card/radio-button-ca
 import {HeaderActionsModule} from "../shared/header-actions/header-actions.module";
 import {ConfirmationComponent} from './confirmation/confirmation.component';
 import {SharedModule} from "../shared/shared.module";
+import {DividerModule} from "primeng/divider";
+import {ResumeComponent} from './resume/resume.component';
 
 @NgModule({
   imports: [
@@ -31,12 +33,14 @@ import {SharedModule} from "../shared/shared.module";
     RadioButtonCardModule,
     HeaderActionsModule,
     SharedModule,
+    DividerModule,
   ],
   declarations: [
     CartComponent,
     PaymentComponent,
     ShippingComponent,
     ConfirmationComponent,
+    ResumeComponent,
   ],
   exports: [
     CartComponent,

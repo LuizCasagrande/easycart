@@ -62,23 +62,15 @@
     <app-payment *ngSwitchCase="2"
                  [(selected)]="cart.paymentMethod"/>
     <app-confirmation *ngSwitchCase="3"
+                      [products]="cart.products"
                       [user]="cart.user"/>
   </div>
 
   <div class="w-12 xl:w-3">
-    <p-card header="Total" styleClass="mt-5 ml-0 xl:mt-0 xl:ml-5">
-      <span class="text-lg font-semibold">{{ getTotal() | currency }}</span>
-      <p-button (onClick)="activeIndex = activeIndex + 1"
-                [disabled]="0 === cart.products.length"
-                [outlined]="true"
-                label="Continuar"
-                styleClass="mt-3 w-full"/>
-      <p-button (onClick)="activeIndex = activeIndex - 1"
-                *ngIf="0 !== activeIndex"
-                [outlined]="true"
-                label="Voltar"
-                styleClass="p-button-danger mt-3 w-full"/>
-    </p-card>
+    <app-resume (onNavigate)="activeIndex = $event"
+                [cart]="cart"
+                [index]="activeIndex"
+                [total]="getTotal()"/>
   </div>
 </div>
 

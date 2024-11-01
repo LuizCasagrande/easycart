@@ -15,7 +15,7 @@
                         [(value)]="selected"
                         [inputId]="method.name"
                         [ngClass]="{'p-disabled': SHIPPING_METHODS[1] === method}"
-                        [radioButtonValue]="method.name">
+                        [radioButtonValue]="method">
     <div ecTemplate="left">
       <div>{{ method.name }}</div>
       <span class="text-sm">Chegará até {{ method.date | date }}</span>

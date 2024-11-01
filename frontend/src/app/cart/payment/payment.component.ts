@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {PAYMENT_METHODS, PaymentMethod} from "../cart";
 
 @Component({
   selector: 'app-payment',
@@ -7,19 +8,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class PaymentComponent {
 
   @Input()
-  selected = '';
+  selected: any;
 
   @Output()
-  selectedChange = new EventEmitter<string>();
+  selectedChange = new EventEmitter<PaymentMethod>();
 
-  protected readonly PAYMENT_METHODS = [{
-    name: 'Pix',
-    icon: 'pi-money-bill',
-  }, {
-    name: 'Boleto Bancário',
-    icon: 'pi-barcode',
-  }, {
-    name: 'Cartão de Crédito',
-    icon: 'pi-credit-card',
-  }];
+  protected readonly PAYMENT_METHODS = PAYMENT_METHODS;
 }
