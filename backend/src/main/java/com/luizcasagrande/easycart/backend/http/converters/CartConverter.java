@@ -2,7 +2,6 @@ package com.luizcasagrande.easycart.backend.http.converters;
 
 import com.luizcasagrande.easycart.backend.entities.Cart;
 import com.luizcasagrande.easycart.backend.entities.CartProduct;
-import com.luizcasagrande.easycart.backend.entities.Product;
 import com.luizcasagrande.easycart.backend.http.request.CartRequest;
 import com.luizcasagrande.easycart.backend.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +9,6 @@ import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.requireNonNullElse;
@@ -25,18 +22,18 @@ public class CartConverter implements Converter<CartRequest, Cart> {
 
     @Override
     public Cart convert(MappingContext<CartRequest, Cart> context) {
-        Cart cart = requireNonNullElse(context.getDestination(), new Cart());
-        CartRequest request = context.getSource();
+        var cart = requireNonNullElse(context.getDestination(), new Cart());
+        var cartRequest = context.getSource();
 
-        cart.setPaymentMethod(request.getPaymentMethod());
-        cart.getProducts().addAll(convertProducts(cart, request));
+        cart.setPaymentMethod(cartRequest.getPaymentMethod());
+        cart.getProducts().addAll(convertProducts(cart, cartRequest));
 
         return cart;
     }
 
-    private Set<CartProduct> convertProducts(Cart cart, CartRequest request) {
-        Map<Long, BigDecimal> quantityPerProduct = request.getQuantityPerProduct();
-        Set<Product> products = productService.findByIdIn(quantityPerProduct.keySet());
+    private Set<CartProduct> convertProducts(Cart cart, CartRequest cartRequest) {
+        var quantityPerProduct = cartRequest.getQuantityPerProduct();
+        var products = productService.findByIdIn(quantityPerProduct.keySet());
 
         return products.stream()
                 .map(p -> new CartProduct(quantityPerProduct.get(p.getId()), p, cart))

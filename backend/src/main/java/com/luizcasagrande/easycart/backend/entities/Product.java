@@ -3,7 +3,6 @@ package com.luizcasagrande.easycart.backend.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,13 +10,15 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Getter
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Setter

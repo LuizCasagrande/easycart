@@ -34,7 +34,7 @@ public class CartController {
     }
 
     @GetMapping("{id}")
-    public CartResponse findById(@PathVariable("id") Long id) {
+    public CartResponse findById(@PathVariable Long id) {
         return modelMapper.map(cartService.findById(id), CartResponse.class);
     }
 

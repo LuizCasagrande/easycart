@@ -10,7 +10,7 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 @SpringBootApplication
 public class App {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
 }

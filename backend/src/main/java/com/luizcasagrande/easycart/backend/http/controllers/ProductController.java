@@ -12,7 +12,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
@@ -35,7 +43,7 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ProductResponse findById(@PathVariable("id") Long id) {
+    public ProductResponse findById(@PathVariable Long id) {
         return modelMapper.map(productService.findById(id), ProductResponse.class);
     }
 
@@ -50,7 +58,7 @@ public class ProductController {
 
     @AuthorizeOnlyManager
     @PutMapping("{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable("id") Long id,
+    public ResponseEntity<ProductResponse> update(@PathVariable Long id,
                                                   @Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
         var product = productService.findById(id);
         modelMapper.map(productUpdateRequest, product);
@@ -61,7 +69,7 @@ public class ProductController {
 
     @AuthorizeOnlyManager
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.delete(id);
         return ResponseEntity.noContent().build();
     }

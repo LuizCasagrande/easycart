@@ -3,15 +3,19 @@ package com.luizcasagrande.easycart.backend.services;
 import com.luizcasagrande.easycart.backend.entities.User;
 import com.luizcasagrande.easycart.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.luizcasagrande.easycart.backend.entities.enums.UserType.CUSTOMER;
+import static java.lang.String.format;
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +29,11 @@ public class UserService implements CrudService<User>, UserDetailsService {
         return userRepository;
     }
 
+    @NonNull
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
+                .orElseThrow(() -> new UsernameNotFoundException(format("User %s not found", email)));
     }
 
     @Override
@@ -41,6 +46,7 @@ public class UserService implements CrudService<User>, UserDetailsService {
     }
 
     public User getLoggedIn() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (User) requireNonNull(SecurityContextHolder.getContext().getAuthentication())
+                .getPrincipal();
     }
 }

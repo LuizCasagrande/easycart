@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.util.stream.Collectors;
-
+import static java.util.stream.Collectors.joining;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -40,7 +39,7 @@ public class ExceptionHandlerConfig {
     public Error handleMethodArgumentNotValidException(MethodArgumentNotValidException e, WebRequest request) {
         String message = e.getBindingResult().getFieldErrors().stream()
                 .map(f -> f.getField() + " " + f.getDefaultMessage())
-                .collect(Collectors.joining("; "));
+                .collect(joining("; "));
 
         return new Error(message, request.getDescription(false));
     }

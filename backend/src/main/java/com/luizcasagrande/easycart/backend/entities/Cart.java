@@ -2,7 +2,14 @@ package com.luizcasagrande.easycart.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.luizcasagrande.easycart.backend.entities.enums.CartPaymentMethod;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,13 +19,17 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Getter
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Setter
@@ -30,7 +41,7 @@ public class Cart {
     private BigDecimal total;
 
     @Setter
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     @Column(nullable = false)
     private CartPaymentMethod paymentMethod;
 
@@ -41,6 +52,6 @@ public class Cart {
 
     @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = ALL, orphanRemoval = true)
     private Set<CartProduct> products = new HashSet<>();
 }

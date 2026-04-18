@@ -27,16 +27,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) {
         return authConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain configure(JwtRequestFilter jwtRequestFilter, HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(JwtRequestFilter jwtRequestFilter, HttpSecurity http) {
         return http.cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**", "/v1/login", "v1/user/register").permitAll()
+                        .requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**", "/v1/login", "/v1/user/register")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)

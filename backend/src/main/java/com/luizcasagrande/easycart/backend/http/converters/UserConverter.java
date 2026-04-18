@@ -1,9 +1,8 @@
 package com.luizcasagrande.easycart.backend.http.converters;
 
-import com.luizcasagrande.easycart.backend.http.request.UserAddressRequest;
-import com.luizcasagrande.easycart.backend.http.request.UserRequest;
 import com.luizcasagrande.easycart.backend.entities.User;
 import com.luizcasagrande.easycart.backend.entities.UserAddress;
+import com.luizcasagrande.easycart.backend.http.request.UserRequest;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,8 @@ public class UserConverter implements Converter<UserRequest, User> {
 
     @Override
     public User convert(MappingContext<UserRequest, User> context) {
-        User user = requireNonNullElse(context.getDestination(), new User());
-        UserRequest userRequest = context.getSource();
+        var user = requireNonNullElse(context.getDestination(), new User());
+        var userRequest = context.getSource();
 
         user.setName(userRequest.getName());
         user.setEmail(userRequest.getEmail());
@@ -28,8 +27,8 @@ public class UserConverter implements Converter<UserRequest, User> {
     }
 
     private UserAddress convertAddress(User user, UserRequest userRequest) {
-        UserAddress address = requireNonNullElse(user.getAddress(), new UserAddress());
-        UserAddressRequest addressRequest = userRequest.getAddress();
+        var address = requireNonNullElse(user.getAddress(), new UserAddress());
+        var addressRequest = userRequest.getAddress();
 
         address.setCity(addressRequest.getCity());
         address.setStreet(addressRequest.getStreet());

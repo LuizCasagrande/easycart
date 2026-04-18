@@ -1,7 +1,6 @@
 package com.luizcasagrande.easycart.backend.services;
 
 import com.luizcasagrande.easycart.backend.entities.Cart;
-import com.luizcasagrande.easycart.backend.entities.User;
 import com.luizcasagrande.easycart.backend.repositories.CartRepository;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -27,32 +26,31 @@ public class CartService implements CrudService<Cart> {
 
     @Override
     public Page<Cart> findAll(Pageable pageable) {
-        User user = userService.getLoggedIn();
-        if (!user.isManager()) {
-            return cartRepository.findByUserId(user.getId(), pageable);
-        }
-        return CrudService.super.findAll(pageable);
+        var user = userService.getLoggedIn();
+        return user.isManager()
+                ? CrudService.super.findAll(pageable)
+                : cartRepository.findByUserId(user.getId(), pageable);
     }
 
     @Override
     public Cart findById(Long id) {
-        User user = userService.getLoggedIn();
-        if (!user.isManager()) {
-            return cartRepository.findByIdAndUserId(id, user.getId())
-                    .orElseThrow(NoResultException::new);
-        }
-        return CrudService.super.findById(id);
+        var user = userService.getLoggedIn();
+        return user.isManager()
+                ? CrudService.super.findById(id)
+                : cartRepository.findByIdAndUserId(id, user.getId())
+                  .orElseThrow(NoResultException::new);
     }
 
     @Override
     public Cart save(Cart entity) {
-        BigDecimal total = entity.getProducts().stream()
+        var total = entity.getProducts().stream()
                 .map(p -> p.getProduct().getPrice().multiply(p.getQuantity()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         entity.setTotal(total);
         entity.setDate(LocalDateTime.now());
         entity.setUser(userService.getLoggedIn());
+
         return CrudService.super.save(entity);
     }
 }
