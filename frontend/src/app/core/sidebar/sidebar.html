@@ -1,0 +1,7 @@
+<p-drawer [modal]="false"
+          [visible]="(visible | async) || false"
+          styleClass="w-15rem mt-7 z-4 border-0">
+  <ng-template pTemplate="headless">
+    <p-menu [model]="items" styleClass="border-0" />
+  </ng-template>
+</p-drawer>

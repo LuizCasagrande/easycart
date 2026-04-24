@@ -1,39 +1,32 @@
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
 html, body {
   margin: 0;
   height: 100dvh;
-  background-color: var(--surface-ground);
   font-family: 'Poppins', sans-serif;
 }
 
-.sidebar-padding {
-  transition: transform .3s;
-  padding-left: 15rem;
-}
-
 app-navbar {
-  input {
-    background-color: color-mix(in srgb, var(--primary-color), white 10%);
-    box-shadow: none;
-    outline: none;
-    border: none;
-  }
-
-  input, input::placeholder {
-    color: white;
-  }
+  --p-inputtext-background: color-mix(in srgb, var(--p-primary-color), white 10%);
+  --p-inputtext-color: var(--p-primary-contrast-color);
+  --p-inputtext-placeholder-color: var(--p-primary-contrast-color);
+  --p-inputtext-border-color: transparent;
+  --p-inputtext-hover-border-color: transparent;
+  --p-inputtext-focus-border-color: transparent;
+  --p-inputtext-focus-ring-width: 0;
+  --p-iconfield-icon-color: var(--p-primary-contrast-color);
 }
 
-.w-45-px {
-  width: 45px;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+@for $i from 1 through 3 {
+  .line-clamp-#{$i} {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $i;
+    line-clamp: $i;
+  }
 }
 
 .flex-card {
@@ -42,14 +35,44 @@ app-navbar {
   justify-content: space-between;
   border-width: 1px;
   border-style: solid;
-  border-radius: var(--border-radius);
-  border-color: var(--surface-border);
+  border-radius: var(--p-content-border-radius);
+  border-color: var(--p-inputtext-border-color);
   padding: 1rem;
   margin-top: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  .sidebar-padding {
+    transition: transform .3s;
+    padding-left: 15rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .p-paginator-current {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 1700px) {
   .xxl\:w-9 {
     width: 75% !important;
+  }
+}
+
+.p-dataview-empty-message {
+  text-align: center;
+  padding: 1rem;
+}
+
+.p-component .p-paginator {
+  padding-bottom: 0;
+}
+
+app-cart .p-card.products {
+  .p-card-body {
+    padding-bottom: .5rem;
   }
 }

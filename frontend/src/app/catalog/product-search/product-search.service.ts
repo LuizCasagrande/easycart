@@ -1,12 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
+import { Injectable } from '@angular/core';
+import { debounceTime, filter, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProductSearchService {
-
-  onSearch = new Subject<string>();
+  private readonly searchSubject = new Subject<string>();
+  search$ = this.searchSubject.pipe(
+    debounceTime(500),
+    filter((query) => query.length > 0),
+  );
 
   search(query: string): void {
-    this.onSearch.next(query);
+    this.searchSubject.next(query.trim());
   }
 }

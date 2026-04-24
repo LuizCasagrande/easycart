@@ -1,0 +1,7 @@
+<p-blockUI #b [blocked]="blocked$ | async">
+  @if (b.blocked) {
+    <div class="flex align-items-center justify-content-center h-full w-full fixed">
+      <i class="pi pi-spin pi-spinner-dotted text-5xl"></i>
+    </div>
+  }
+</p-blockUI>

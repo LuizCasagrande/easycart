@@ -1,22 +1,22 @@
-import {Injectable} from '@angular/core';
-import {catchError, filter, finalize, map, Observable} from "rxjs";
-import {Err} from "./err";
-import {LoaderService} from "./loader/loader.service";
-import {Message, MessageService} from "primeng/api";
-import {NavigationEnd, Router} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { catchError, filter, finalize, map, Observable } from 'rxjs';
+import { Err } from './err';
+import { LoaderService } from './loader/loader.service';
+import { MessageService, ToastMessageOptions } from 'primeng/api';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EasyCartService {
-
-  constructor(private readonly loaderService: LoaderService,
-              private readonly messageService: MessageService,
-              private readonly router: Router) {
-  }
+  constructor(
+    protected loaderService: LoaderService,
+    protected messageService: MessageService,
+    protected router: Router,
+  ) {}
 
   onChangeUrl(func: (id: number) => void): void {
-    this.onNavigationEnd().subscribe(url => {
+    this.onNavigationEnd().subscribe((url) => {
       const items = url.split('/');
       const id = Number(items[items.length - 1] || 0);
       if (id) {
@@ -35,8 +35,7 @@ export class EasyCartService {
   executeRequest<T>(
     request: Observable<T>,
     showLoader = true,
-    onFinalize = () => {
-    },
+    onFinalize = () => {},
   ): Observable<T> {
     if (showLoader) {
       this.loaderService.show();
@@ -50,11 +49,11 @@ export class EasyCartService {
     );
   }
 
-  addMessage(message: Message): void {
+  addMessage(message: ToastMessageOptions): void {
     this.messageService.add(message);
   }
 
   navigateByUrl(url: string): Promise<boolean> {
-    return this.router.navigateByUrl(url)
+    return this.router.navigateByUrl(url);
   }
 }

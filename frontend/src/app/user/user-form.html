@@ -1,0 +1,73 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <p-card header="Usuário">
+    <ec-header-actions>
+      <div ecTemplate="left">
+        <p-button [text]="true"
+                  icon="pi pi-arrow-left"
+                  routerLink="/catalog" />
+      </div>
+      <div ecTemplate="right">
+        <p-button [text]="true"
+                  icon="pi pi-save"
+                  type="submit" />
+      </div>
+    </ec-header-actions>
+
+    @if (USER_TYPE.MANAGER === form.get('type')?.value) {
+      <p-tag [value]="'#' + USER_TYPE.MANAGER" />
+    }
+
+    <ec-field inputId="name" label="Nome">
+      <input formControlName="name"
+             id="name"
+             maxlength="250"
+             pInputText
+             type="text" />
+    </ec-field>
+    <ec-field inputId="email" label="Email">
+      <input formControlName="email"
+             id="email"
+             maxlength="250"
+             pInputText
+             type="text" />
+    </ec-field>
+    <ec-field inputId="phone" label="Telefone">
+      <p-inputNumber [maxlength]="11"
+                     [useGrouping]="false"
+                     formControlName="phone"
+                     inputId="phone" />
+    </ec-field>
+  </p-card>
+
+  <div class="h-2rem"></div>
+
+  <p-card formGroupName="address" header="Endereço">
+    <ec-field inputId="zipcode" label="Cep">
+      <input formControlName="zipcode"
+             id="zipcode"
+             maxlength="25"
+             pInputText
+             type="text" />
+    </ec-field>
+    <ec-field inputId="street" label="Rua">
+      <input formControlName="street"
+             id="street"
+             maxlength="250"
+             pInputText
+             type="text" />
+    </ec-field>
+    <ec-field inputId="number" label="Número">
+      <p-inputNumber [maxlength]="25"
+                     [useGrouping]="false"
+                     formControlName="number"
+                     inputId="number" />
+    </ec-field>
+    <ec-field inputId="city" label="Cidade">
+      <input formControlName="city"
+             id="city"
+             maxlength="250"
+             pInputText
+             type="text" />
+    </ec-field>
+  </p-card>
+</form>

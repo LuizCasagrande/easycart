@@ -1,0 +1,24 @@
+@for (product of products; track product.id; let first = $first) {
+  <div [ngClass]="{'border-top-1 surface-border': !first}" class="p-2 py-3">
+    <div class="flex flex-wrap lg:flex-nowrap flex-column lg:flex-row justify-content-between">
+      <div class="flex flex-wrap lg:flex-nowrap align-items-center">
+        <img [alt]="product.title"
+             [src]="product.image"
+             class="border-round cursor-pointer w-full sm:w-2"
+             routerLink="/product/{{product.id}}">
+        <div class="m-0 lg:mx-3 ">
+          <span class="text-sm text-600">{{ product.category }}</span>
+          <div [title]="product.title" class="text-base line-clamp-1">{{ product.title }}</div>
+        </div>
+      </div>
+      <div class="flex flex-column justify-content-center lg:align-items-end">
+        <span class="text-lg font-semibold py-3 px-2">{{ product.price | currency }}</span>
+        <p-button (onClick)="onAdd.emit(product.id)"
+                  [outlined]="true"
+                  icon="pi pi-shopping-cart"
+                  label="Comprar"
+                  styleClass="w-full lg:w-auto" />
+      </div>
+    </div>
+  </div>
+}

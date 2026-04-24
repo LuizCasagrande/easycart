@@ -1,0 +1,50 @@
+@if (isVisible()) {
+  <div class="flex align-items-center justify-content-between w-full h-4rem px-3 shadow-4 bg-primary fixed z-5">
+
+    <div class="flex align-items-center col-4">
+      @if (userIsManager()) {
+        <p-button (onClick)="sidebarService.toggle()"
+                  icon="pi pi-bars"
+                  size="large"
+                  styleClass="h-3rem" />
+      }
+      <span class="text-2xl font-medium cursor-pointer" routerLink="/catalog">&nbsp;EasyCart</span>
+    </div>
+
+    <div class="hidden lg:flex justify-content-center col-4">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input (ngModelChange)="productSearchService.search($event)"
+               [(ngModel)]="search"
+               class="w-30rem"
+               maxlength="50"
+               pInputText
+               placeholder="Search"
+               type="text" />
+      </p-iconfield>
+      <app-product-search (onSelect)="search = ''" />
+    </div>
+
+    <div class="flex justify-content-end col-4">
+      <p-button (onClick)="checkDarkMode(true)"
+                class="hidden lg:inline"
+                icon="pi pi-{{darkMode ? 'sun' : 'moon'}}"
+                size="large"
+                styleClass="h-3rem" />
+      @if (user(); as user) {
+        <p-menu #menu [model]="userMenu" [popup]="true" />
+        <p-button (onClick)="menu.toggle($event)"
+                  [label]="user.name.split(' ')[0]"
+                  class="hidden lg:inline"
+                  icon="pi pi-user"
+                  size="large"
+                  styleClass="h-3rem" />
+      }
+      <p-button [badge]="cartSize.toString()"
+                icon="pi pi-shopping-cart"
+                routerLink="cart"
+                size="large"
+                styleClass="h-3rem" />
+    </div>
+  </div>
+}

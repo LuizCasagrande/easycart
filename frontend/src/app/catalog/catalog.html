@@ -1,0 +1,33 @@
+<div class="surface-card shadow-1 border-round-xl p-2">
+  <p-dataView [layout]="layout"
+              [loading]="loading"
+              [value]="products()"
+              emptyMessage="Nenhum produto encontrado.">
+    <ng-template #header>
+      <div class="flex justify-content-between">
+        <p-multiSelect (onChange)="load()"
+                       [(ngModel)]="selectedCategories"
+                       [options]="categories()"
+                       emptyFilterMessage="Vazio"
+                       emptyMessage="Vazio"
+                       placeholder="Selecionar Categorias"
+                       selectedItemsLabel="{totalRecods} Categorias Selecionadas" />
+        <p-selectbutton [(ngModel)]="layout" [allowEmpty]="false" [options]="['list', 'grid']">
+          <ng-template #item let-layout>
+            <i [ngClass]="{ 'pi-bars': 'list' === layout, 'pi-table': 'grid' === layout }" class="pi"></i>
+          </ng-template>
+        </p-selectbutton>
+      </div>
+    </ng-template>
+
+    <ng-template #grid let-products>
+      <app-catalog-grid (onAdd)="addToCart($event)"
+                        [products]="products" />
+    </ng-template>
+
+    <ng-template #list let-products>
+      <app-catalog-list (onAdd)="addToCart($event)"
+                        [products]="products" />
+    </ng-template>
+  </p-dataView>
+</div>

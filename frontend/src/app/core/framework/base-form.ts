@@ -1,9 +1,8 @@
-import {Directive} from "@angular/core";
-import {FormGroup} from "@angular/forms";
+import { Directive } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Directive()
 export abstract class BaseForm {
-
   protected form!: FormGroup;
   protected id!: number;
 
@@ -11,16 +10,12 @@ export abstract class BaseForm {
     this.createFormGroup();
   }
 
-  protected createFormGroup(): void {
-  }
+  protected createFormGroup(): void {}
 
-  protected submit(): void {
-  }
+  protected submit(): void {}
 
   protected onSubmit(): void {
-    this.isValid()
-      ? this.submit()
-      : this.validate();
+    this.isValid() ? this.submit() : this.validate();
   }
 
   protected isValid(): boolean {

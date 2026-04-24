@@ -212,7 +212,7 @@ databaseChangeLog:
                   value: 'luiz@gmail.com'
               - column:
                   name: password
-                  value: '{bcrypt}$2a$10$gCpO5hhNtGrnVtRmdM1mxO2f3nSf1O.qNsQRh5Ye8W5DHtSi4Ay8S'
+                  value: '{bcrypt}$2a$10$ctdVV6wQ3pCzoGBlIKqYhOBieNgfhjnhSCDc.6K4ikjOEw9PZtWKu'
               - column:
                   name: phone
                   value: '11999998888'
@@ -240,3 +240,469 @@ databaseChangeLog:
               - column:
                   name: user_id
                   value: '1'
+  - changeSet:
+      id: 4
+      author: Luiz
+      changes:
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: title
+                  value: 'Placa Mãe Asus TUF Gaming B550M-Plus'
+              - column:
+                  name: description
+                  value: 'Placa Mãe Asus TUF Gaming B550M-Plus, Chipset B550, AMD AM4, mATX, DDR4'
+              - column:
+                  name: price
+                  value: '779.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/01.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '2'
+              - column:
+                  name: title
+                  value: 'Processador AMD Ryzen 7 5700X 3.4GHz (4.6GHz Turbo)'
+              - column:
+                  name: description
+                  value: 'Processador AMD Ryzen 7 5700X 3.4GHz (4.6GHz Turbo), 8-Cores 16-Threads, AM4, Sem Cooler'
+              - column:
+                  name: price
+                  value: '1199.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/02.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '3'
+              - column:
+                  name: title
+                  value: 'Memória 16GB DDR4 XPG Spectrix D35G'
+              - column:
+                  name: description
+                  value: 'Memória 16GB DDR4 XPG Spectrix D35G, RGB, 3200MHz, Black'
+              - column:
+                  name: price
+                  value: '699.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/03.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '4'
+              - column:
+                  name: title
+                  value: 'Placa de Vídeo Zotac Gaming NVIDIA GeForce RTX 5060 Ti Twin Edge OC'
+              - column:
+                  name: description
+                  value: 'Placa de Vídeo Zotac Gaming NVIDIA GeForce RTX 5060 Ti Twin Edge OC, 8GB, GDDR7, DLSS, Ray Tracing'
+              - column:
+                  name: price
+                  value: '2699.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/04.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '5'
+              - column:
+                  name: title
+                  value: 'SSD Kingston NV3, 1TB'
+              - column:
+                  name: description
+                  value: 'SSD Kingston NV3, 1TB, M.2 NVMe, 2280, PCIe 4.0, Leitura 6000MBs e Gravação 4000MBs'
+              - column:
+                  name: price
+                  value: '999.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/05.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '6'
+              - column:
+                  name: title
+                  value: 'SSD SanDisk Plus, 500GB'
+              - column:
+                  name: description
+                  value: 'SSD SanDisk Plus, 500GB, Sata III, Leitura: 545MBs e Gravação: 505MBs'
+              - column:
+                  name: price
+                  value: '559.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/06.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '7'
+              - column:
+                  name: title
+                  value: 'Fonte ASRock Pro, 750W'
+              - column:
+                  name: description
+                  value: 'Fonte ASRock Pro, 750W, 80 Plus Bronze, ATX 3.1, PCIe 5.1, PFC Ativo, Preto'
+              - column:
+                  name: price
+                  value: '364.99'
+              - column:
+                  name: category
+                  value: 'Hardware'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/07.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '8'
+              - column:
+                  name: title
+                  value: 'Gabinete Corsair 3000D Airflow'
+              - column:
+                  name: description
+                  value: 'Gabinete Corsair 3000D Airflow, Mid Tower, Vidro Temperado, ATX, Sem Fonte, Com 2 Fans, Preto'
+              - column:
+                  name: price
+                  value: '484.99'
+              - column:
+                  name: category
+                  value: 'Gabinetes'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/08.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '9'
+              - column:
+                  name: title
+                  value: 'Gabinete Corsair 480T Airflow'
+              - column:
+                  name: description
+                  value: 'Gabinete Corsair 480T Airflow, Mid Tower, Vidro Temperado, ATX, Sem Fonte, Sem Fan, Preto'
+              - column:
+                  name: price
+                  value: '289.98'
+              - column:
+                  name: category
+                  value: 'Gabinetes'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/09.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '10'
+              - column:
+                  name: title
+                  value: 'Cooler para Processador Noctua NH-D15'
+              - column:
+                  name: description
+                  value: 'Cooler para Processador Noctua NH-D15, 140mm, Black, Intel-AMD, NH-D15 chromax.black'
+              - column:
+                  name: price
+                  value: '929.99'
+              - column:
+                  name: category
+                  value: 'Refrigeração'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/10.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '11'
+              - column:
+                  name: title
+                  value: 'Water Cooler Cooler Master MasterLiquid 240L Core Spectrum'
+              - column:
+                  name: description
+                  value: 'Water Cooler Cooler Master MasterLiquid 240L Core Spectrum, ARGB, 240mm, Intel-AMD, Preto'
+              - column:
+                  name: price
+                  value: '559.99'
+              - column:
+                  name: category
+                  value: 'Refrigeração'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/11.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '12'
+              - column:
+                  name: title
+                  value: 'Cooler Para Gabinete Arctic Cooling P12'
+              - column:
+                  name: description
+                  value: 'Cooler Para Gabinete Arctic Cooling P12, 120mm, Preto'
+              - column:
+                  name: price
+                  value: '37.98'
+              - column:
+                  name: category
+                  value: 'Refrigeração'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/12.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '13'
+              - column:
+                  name: title
+                  value: 'Monitor Asus TUF Gaming VG27AQ5A'
+              - column:
+                  name: description
+                  value: 'Monitor Asus TUF Gaming VG27AQ5A, 27 Pol, QHD, 210Hz, Fast IPS, 0.3ms, 130% sRGB, G-Sync Comp, FreeSync Premium, HDMI/DP'
+              - column:
+                  name: price
+                  value: '1299.90'
+              - column:
+                  name: category
+                  value: 'Monitores'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/13.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '14'
+              - column:
+                  name: title
+                  value: 'Monitor Gigabyte GS25F14'
+              - column:
+                  name: description
+                  value: 'Monitor Gigabyte GS25F14, 24.5 Pol, Full HD, IPS, 144Hz, 1ms, 120% sRGB, HDR10, HDMI/DP'
+              - column:
+                  name: price
+                  value: '649.90'
+              - column:
+                  name: category
+                  value: 'Monitores'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/14.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '15'
+              - column:
+                  name: title
+                  value: 'Suporte de Monitor Elements Audaz Duo'
+              - column:
+                  name: description
+                  value: 'Suporte de Monitor Elements Audaz Duo, Articulado, Preto'
+              - column:
+                  name: price
+                  value: '419.99'
+              - column:
+                  name: category
+                  value: 'Monitores'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/15.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '16'
+              - column:
+                  name: title
+                  value: 'Teclado Mecânico MCHOSE K99 V2 Mountains Gradient'
+              - column:
+                  name: description
+                  value: 'Teclado Mecânico MCHOSE K99 V2 Mountains Gradient, Wireless, Bluetooth, RGB, Icy Creamsicle Switch, ANSI, 98%, Preto'
+              - column:
+                  name: price
+                  value: '629.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/16.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '17'
+              - column:
+                  name: title
+                  value: 'Teclado Mecânico Akko Naruto Uzumaki 5075B Plus'
+              - column:
+                  name: description
+                  value: 'Teclado Mecânico Akko Naruto Uzumaki 5075B Plus, RGB, USB/Bluetooth, ANSI, Switch Akko Crystal'
+              - column:
+                  name: price
+                  value: '799.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/17.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '18'
+              - column:
+                  name: title
+                  value: 'Teclado Mecânico Akko MOD 007PC Blue On White'
+              - column:
+                  name: description
+                  value: 'Teclado Mecânico Akko MOD 007PC Blue On White, USB, ANSI, Switch Akko Piano V3 Pro'
+              - column:
+                  name: price
+                  value: '799.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/18.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '19'
+              - column:
+                  name: title
+                  value: 'Mouse ATK Blazing Sky X1 V2 Ultimate'
+              - column:
+                  name: description
+                  value: 'Mouse ATK Blazing Sky X1 V2 Ultimate, Wireless, 30.000 DPI, 8K, Sensor PAW 3950, Vermelho'
+              - column:
+                  name: price
+                  value: '509.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/19.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '20'
+              - column:
+                  name: title
+                  value: 'Mouse ATK Blazing Sky X1 V2 Extreme'
+              - column:
+                  name: description
+                  value: 'Mouse ATK Blazing Sky X1 V2 Extreme, Wireless, 30.000 DPI, 8K, Sensor PAW 3950, Roxo'
+              - column:
+                  name: price
+                  value: '709.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/20.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '21'
+              - column:
+                  name: title
+                  value: 'Headset MCHOSE X9'
+              - column:
+                  name: description
+                  value: 'Headset MCHOSE X9, RGB, Wireless, Bluetooth, Drivers de 53mm, Surround 7.1, Preto'
+              - column:
+                  name: price
+                  value: '439.99'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/21.jpg'
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: '22'
+              - column:
+                  name: title
+                  value: 'Mousepad PCYes Desk Mat Exclusive Bordô'
+              - column:
+                  name: description
+                  value: 'Mousepad PCYes Desk Mat Exclusive Bordô, Grande, 800x400mm'
+              - column:
+                  name: price
+                  value: '69.90'
+              - column:
+                  name: category
+                  value: 'Periféricos'
+              - column:
+                  name: image
+                  value: 'https://raw.githubusercontent.com/LuizCasagrande/assets/refs/heads/main/easycart/22.jpg'

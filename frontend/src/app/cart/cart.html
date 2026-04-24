@@ -1,0 +1,36 @@
+<p-card>
+  <p-steps [activeIndex]="activeIndex"
+           [model]="steps"
+           [readonly]="true" />
+</p-card>
+<div class="h-2rem"></div>
+
+<div class="flex flex-wrap">
+  <div class="w-12 xl:w-9">
+    @switch (activeIndex) {
+      @case (0) {
+        <app-cart-product-list (onRemove)="remove($event)"
+                               (onSetQuantity)="setQuantity($event.productId, $event.newQuantity)"
+                               [products]="cartRequest.products" />
+      }
+      @case (1) {
+        <app-shipping [(selected)]="cartRequest.shippingMethod"
+                      [user]="cartRequest.user" />
+      }
+      @case (2) {
+        <app-payment [(selected)]="cartRequest.paymentMethod" />
+      }
+      @case (3) {
+        <app-confirmation [products]="cartRequest.products"
+                          [user]="cartRequest.user" />
+      }
+    }
+  </div>
+
+  <div class="w-12 xl:w-3">
+    <app-resume (onNavigate)="activeIndex = $event"
+                [cart]="cartRequest"
+                [index]="activeIndex"
+                [total]="getTotal()" />
+  </div>
+</div>

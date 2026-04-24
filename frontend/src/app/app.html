@@ -1,0 +1,22 @@
+<app-loader />
+<app-sidebar #sidebar />
+<app-navbar #navbar />
+
+<div [ngClass]="{'sidebar-padding': sidebar.visible | async}" class="h-full w-12 sm:w-11 xxl:w-9 m-auto">
+  @if (navbar.isVisible()) {
+    <div class="h-7rem"></div>
+    <router-outlet />
+    <div class="h-3rem"></div>
+  } @else {
+    <router-outlet />
+  }
+</div>
+
+<p-toast [preventOpenDuplicates]="true"
+         position="bottom-right" />
+<p-confirmDialog [closable]="false"
+                 acceptButtonStyleClass="p-button-text"
+                 acceptLabel="Sim"
+                 header="Confirmação"
+                 rejectButtonStyleClass="p-button-text"
+                 rejectLabel="Não" />

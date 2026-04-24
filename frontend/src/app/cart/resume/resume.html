@@ -1,0 +1,50 @@
+<div class="flex flex-column-reverse xl:flex-column mt-5 xl:mt-0 xl:ml-5 gap-5">
+  <p-card header="Total">
+    <div class="flex flex-column gap-3">
+      <span class="text-lg font-semibold">{{ total | currency }}</span>
+      <p-button (onClick)="onNavigate.emit(index + 1)"
+                [disabled]="cart.products.length < 1"
+                [outlined]="true"
+                label="Continuar"
+                styleClass="w-full" />
+      @if (index) {
+        <p-button (onClick)="onNavigate.emit(index - 1)"
+                  [outlined]="true"
+                  label="Voltar"
+                  styleClass="p-button-danger w-full" />
+      }
+    </div>
+  </p-card>
+
+  @if (3 === index) {
+    <p-card header="Entrega">
+      <section class="flex-card flex-wrap">
+        @let address = cart.user.address;
+        <div class="line-height-3">
+          <span class="font-semibold">Endereço:</span>
+          <div>{{ address.street }} {{ address.number }}</div>
+          <span>{{ address.city }} - {{ address.zipcode }}</span>
+        </div>
+        <p-button [text]="true"
+                  icon="pi pi-pencil"
+                  routerLink="/user" />
+
+        <p-divider class="w-12" />
+
+        @let shippingMethod = cart.shippingMethod;
+        <div class="line-height-3">
+          <span class="font-semibold">{{ shippingMethod.name }}:</span>
+          <div>Chegará até {{ shippingMethod.date | date: 'shortDate' }}</div>
+          <span>{{ shippingMethod.price > 0 ? (shippingMethod.price | currency) : 'Grátis' }}</span>
+        </div>
+      </section>
+    </p-card>
+
+    <p-card header="Forma de Pagamento">
+      <section class="flex-card">
+        <span>{{ cart.paymentMethod.name }}</span>
+        <i class="pi {{ cart.paymentMethod.icon }}"></i>
+      </section>
+    </p-card>
+  }
+</div>

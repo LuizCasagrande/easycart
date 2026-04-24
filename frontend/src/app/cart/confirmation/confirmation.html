@@ -1,0 +1,13 @@
+<p-card header="Meus Dados">
+  <div class="flex-card">
+    <section class="line-height-3">
+      <span class="font-semibold">{{ user.name }}</span>
+      <div>Email: {{ user.email }}</div>
+      <span>Telefone: {{ user.phone | phone }}</span>
+    </section>
+  </div>
+</p-card>
+
+<div class="h-2rem"></div>
+
+<app-cart-product-list [products]="products" [readOnly]="true" />

@@ -1,0 +1,11 @@
+<p-card header="Forma de Pagamento">
+  @for (method of paymentMethods; track method.name) {
+    <ec-radio-button-card (valueChange)="selectedChange.emit($event)"
+                          [(value)]="selected"
+                          [inputId]="method.name"
+                          [radioButtonValue]="method">
+      <span ecTemplate="left">{{ method.name }}</span>
+      <i class="pi {{method.icon}}" ecTemplate="right"></i>
+    </ec-radio-button-card>
+  }
+</p-card>

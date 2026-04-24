@@ -1,17 +1,21 @@
-import {EventEmitter, Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
+import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { AUTHORIZATION } from '../shared/constants/app.constants';
+import { CartService } from '../cart/cart.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LoginService {
-
-  setTokenEvent = new EventEmitter();
+  newTokenEvent = new EventEmitter();
   private readonly endpoint = `${environment.apiUrl}/v1/login`;
-  private readonly authorization = 'authorization';
 
-  constructor(private readonly http: HttpClient) {
-  }
+  constructor(
+    protected http: HttpClient,
+    protected router: Router,
+    protected cartService: CartService,
+  ) {}
 
   login(loginRequest: LoginRequest): Observable<any> {
     return this.http.post<any>(this.endpoint, loginRequest);
@@ -19,6 +23,8 @@ export class LoginService {
 
   logout(): void {
     localStorage.clear();
+    this.cartService.reset();
+    this.sendToLoginPage();
   }
 
   hasToken(): boolean {
@@ -26,17 +32,30 @@ export class LoginService {
   }
 
   getToken(): string {
-    return localStorage.getItem(this.authorization)!;
+    return localStorage.getItem(AUTHORIZATION)!;
   }
 
   setToken(token: string): void {
-    localStorage.setItem(this.authorization, token);
-    this.setTokenEvent.emit();
+    localStorage.setItem(AUTHORIZATION, token);
+    this.newTokenEvent.emit();
   }
 
-  hasTokenExpired(): boolean {
+  isTokenValid(): boolean {
+    if (!this.hasToken()) {
+      this.sendToLoginPage();
+      return false;
+    }
     const expiry = JSON.parse(atob(this.getToken().split('.')[1])).exp;
-    return Math.floor(new Date().getTime() / 1000) >= expiry;
+    const isValid = Math.floor(new Date().getTime() / 1000) < expiry;
+
+    if (!isValid) {
+      this.logout();
+    }
+    return isValid;
+  }
+
+  private sendToLoginPage() {
+    this.router.navigateByUrl('login').catch();
   }
 }
 

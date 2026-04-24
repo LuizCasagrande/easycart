@@ -1,0 +1,48 @@
+<p-card class="products" header="Produtos">
+  @if (products.length > 0) {
+    <p-dataView [value]="products">
+      <ng-template #list let-products>
+        @for (product of products; track product.id) {
+          <div class="flex flex-row border-top-1 surface-border p-2">
+            <div class="flex align-items-center gap-3">
+              @if (!readOnly) {
+                <p-button (onClick)="onRemove.emit(product.id)"
+                          [text]="true"
+                          icon="pi pi-trash"
+                          size="small"
+                          styleClass="p-button-danger" />
+              }
+              <img [alt]="product.title"
+                   [src]="product.image"
+                   class="w-2 cursor-pointer"
+                   routerLink="/product/{{product.id}}">
+              <div>
+                <span class="text-sm text-600">{{ product.category }}</span>
+                <div [title]="product.title" class="line-clamp-1">{{ product.title }}</div>
+                <span class="font-semibold">{{ product.price | currency }}</span>
+              </div>
+            </div>
+
+            <div class="flex align-items-center gap-2">
+              <span class="text-sm">Qtd.</span>
+              @if (readOnly) {
+                <span>{{ product.quantity | quantity }}</span>
+              } @else {
+                <p-inputNumber (ngModelChange)="onSetQuantity.emit({productId: product.id, newQuantity: $event})"
+                               [(ngModel)]="product.quantity"
+                               [max]="99"
+                               [min]="1"
+                               [prefix]="product.quantity | quantity: 'prefix'"
+                               [showButtons]="true"
+                               inputId="quantity"
+                               inputStyleClass="w-6rem text-center" />
+              }
+            </div>
+          </div>
+        }
+      </ng-template>
+    </p-dataView>
+  } @else {
+    <div class="pb-3">Seu carrinho está vazio.</div>
+  }
+</p-card>

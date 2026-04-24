@@ -1,0 +1,63 @@
+<p-card header="Produtos">
+  <div class="flex">
+    <div class="col-6 text-left p-0">
+      <p-iconfield iconPosition="left">
+        <p-inputicon class="pi pi-search" />
+        <input (ngModelChange)="query$.next($event)"
+               [(ngModel)]="query"
+               pInputText
+               placeholder="Pesquisar"
+               type="text" />
+      </p-iconfield>
+    </div>
+    <div class="col-6 text-right p-0">
+      <p-button [text]="true"
+                icon="pi pi-plus"
+                routerLink="/management/product/new" />
+    </div>
+  </div>
+  <p-table (onLazyLoad)="load()"
+           [lazy]="true"
+           [loading]="loading"
+           [paginator]="value.length > 0"
+           [rowsPerPageOptions]="[10, 20, 30]"
+           [rows]="10"
+           [showCurrentPageReport]="true"
+           [tableStyle]="{ 'min-width': '50rem' }"
+           [totalRecords]="totalRecords"
+           [value]="value"
+           currentPageReportTemplate="{first} a {last} de {totalRecords} registros.">
+    <ng-template pTemplate="header">
+      <tr>
+        <th displayName="Id" field="id" pSortableColumn="id" tableHeader></th>
+        <th displayName="Nome" field="title" pSortableColumn="title" tableHeader></th>
+        <th displayName="Preço" field="price" pSortableColumn="price" tableHeader></th>
+        <th displayName="Categoria" field="category" pSortableColumn="category" tableHeader></th>
+        <th class="w-6rem">&nbsp;</th>
+      </tr>
+    </ng-template>
+    <ng-template let-product pTemplate="body">
+      <tr>
+        <td>{{ product.id }}</td>
+        <td>
+          <span class="line-clamp-1">{{ product.title }}</span>
+        </td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.category }}</td>
+        <td class="p-0">
+          <p-button [routerLink]="product.id"
+                    [text]="true"
+                    icon="pi pi-pencil" />
+          <p-button (onClick)="onRemove(product.id)"
+                    [text]="true"
+                    icon="pi pi-trash" />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td class="text-center" colspan="5">Nenhum produto encontrado.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
