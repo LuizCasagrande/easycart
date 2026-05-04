@@ -5,6 +5,8 @@ import { DefaultGuard } from './auth/default.guard';
 import { UserForm } from './user/user-form';
 import { ProductDetail } from './catalog/product-detail/product-detail';
 import { Cart } from './cart/cart';
+import { OrderList } from './order/order-list';
+import { OrderDetail } from './order/order-detail';
 
 export const routes: Routes = [
   {
@@ -17,6 +19,8 @@ export const routes: Routes = [
   { path: 'user', component: UserForm, canActivate: [DefaultGuard] },
   { path: 'product/:id', component: ProductDetail, canActivate: [DefaultGuard] },
   { path: 'cart', component: Cart, canActivate: [DefaultGuard] },
+  { path: 'order', component: OrderList, canActivate: [DefaultGuard] },
+  { path: 'order/:id', component: OrderDetail, canActivate: [DefaultGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'catalog' },
   { path: '**', pathMatch: 'full', redirectTo: 'catalog' },
 ];

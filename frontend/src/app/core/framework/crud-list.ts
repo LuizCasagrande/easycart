@@ -1,4 +1,4 @@
-import { Directive, Injector, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, Injector, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { debounceTime, distinctUntilChanged, Observable, of, Subject } from 'rxjs';
 import { EasyCartService } from '../../shared/easy-cart.service';
@@ -7,7 +7,7 @@ import { Pageable, PageResponse } from './page-data';
 import { MESSAGES } from '../../shared/constants/app.constants';
 
 @Directive()
-export abstract class CrudList<T> {
+export abstract class CrudList<T> implements AfterViewInit {
   @ViewChild(Table)
   protected table!: Table;
   protected value: T[] = [];
@@ -17,12 +17,18 @@ export abstract class CrudList<T> {
   protected query$ = new Subject<string>();
   protected easyCartService: EasyCartService;
   protected confirmationService: ConfirmationService;
+  protected changeDetector: ChangeDetectorRef;
 
   protected constructor(protected injector: Injector) {
     this.easyCartService = this.injector.get(EasyCartService);
     this.confirmationService = this.injector.get(ConfirmationService);
+    this.changeDetector = this.injector.get(ChangeDetectorRef);
 
     this.query$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => this.load());
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetector.detectChanges();
   }
 
   protected findAll(): Observable<PageResponse<T>> {
@@ -55,10 +61,9 @@ export abstract class CrudList<T> {
       });
   }
 
-  protected getPageable(): Pageable {
+  protected getPageable(sort = 'id,asc'): Pageable {
     let page = 0;
     let size = 10;
-    let sort = 'id,asc';
     if (this.table != null) {
       size = <number>this.table.rows;
       page = <number>this.table.first / size;

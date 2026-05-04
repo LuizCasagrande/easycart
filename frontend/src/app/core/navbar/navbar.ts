@@ -43,6 +43,7 @@ export class Navbar implements OnInit {
     this.findUserData();
     this.userMenu = [
       { label: 'Perfil', routerLink: '/user' },
+      { label: 'Meus Pedidos', routerLink: '/order' },
       { label: 'Sair', command: () => this.logout() },
     ];
 

@@ -1,8 +1,9 @@
 import { User } from '../user/user-data';
 import { Product } from '../management/product/product-data';
 import { nowPlusDays } from '../shared/utils';
+import { MenuItem } from 'primeng/api';
 
-export const ORDER_STEPS = [
+export const ORDER_STEPS: MenuItem[] = [
   { label: 'Carrinho' },
   { label: 'Entrega' },
   { label: 'Pagamento' },
@@ -11,15 +12,15 @@ export const ORDER_STEPS = [
 
 export const FINAL_STEP = 4;
 
-export const SHIPPING_METHODS = [
+export const SHIPPING_METHODS: ShippingMethod[] = [
   { name: 'Entrega Econômica', date: nowPlusDays(7), price: 0 },
   { name: 'Entrega Expressa', date: nowPlusDays(3), price: 19.53 },
 ];
 
-export const PAYMENT_METHODS = [
-  { name: 'Pix', icon: 'pi-money-bill', enumValue: 'PIX' },
-  { name: 'Boleto Bancário', icon: 'pi-barcode', enumValue: 'BANK_SLIP' },
-  { name: 'Cartão de Crédito', icon: 'pi-credit-card', enumValue: 'CREDIT_CARD' },
+export const PAYMENT_METHODS: PaymentMethod[] = [
+  { name: 'Pix', icon: 'pi-money-bill', value: 'PIX' },
+  { name: 'Boleto Bancário', icon: 'pi-barcode', value: 'BANK_SLIP' },
+  { name: 'Cartão de Crédito', icon: 'pi-credit-card', value: 'CREDIT_CARD' },
 ];
 
 export class CartDto {
@@ -38,5 +39,5 @@ export interface ShippingMethod {
 export interface PaymentMethod {
   name: string;
   icon: string;
-  enumValue: string;
+  value: string;
 }

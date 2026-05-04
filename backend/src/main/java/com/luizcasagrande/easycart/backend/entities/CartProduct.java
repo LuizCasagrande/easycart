@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "product")
 @Entity
 public class CartProduct {
 

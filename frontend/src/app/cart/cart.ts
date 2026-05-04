@@ -83,7 +83,7 @@ export class Cart implements OnInit {
         this.easyCartService.executeRequest(this.cartService.save(this.cartDto)).subscribe(() => {
           this.cartService.reset();
           this.router
-            .navigateByUrl('/catalog')
+            .navigateByUrl('/order')
             .then(() => this.messageService.add(MESSAGES.ORDER_COMPLETED));
         });
       },

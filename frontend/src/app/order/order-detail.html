@@ -1,0 +1,16 @@
+@if (order(); as order) {
+  <p-card header="Pedido #{{order.id}}">
+    <ec-header-actions>
+      <div ecTemplate="left">
+        <p-button [text]="true"
+                  icon="pi pi-arrow-left"
+                  routerLink="/order" />
+      </div>
+    </ec-header-actions>
+  </p-card>
+
+  <div class="h-1rem"></div>
+
+  <app-cart-product-list [products]="order.products.flatMap((p) => p.product)"
+                         [readOnly]="true" />
+}

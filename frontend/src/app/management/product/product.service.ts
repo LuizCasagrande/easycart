@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from './product-data';
 import { Pageable, PageResponse } from '../../core/framework/page-data';
+import { getPageableParams } from '../../shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -12,7 +13,7 @@ export class ProductService {
   constructor(protected http: HttpClient) {}
 
   findAll(pageable: Pageable, query?: string): Observable<PageResponse<Product>> {
-    const params = this.getPageableParams(pageable).set('query', query || '');
+    const params = getPageableParams(pageable).set('query', query || '');
     return this.http.get<PageResponse<Product>>(this.endpoint, { params });
   }
 
@@ -36,14 +37,7 @@ export class ProductService {
   }
 
   findByCategoryIn(pageable: Pageable, categories: string[]): Observable<PageResponse<Product>> {
-    const params = this.getPageableParams(pageable).set('categories', categories.join(','));
+    const params = getPageableParams(pageable).set('categories', categories.join(','));
     return this.http.get<PageResponse<Product>>(`${this.endpoint}/category-in`, { params });
-  }
-
-  private getPageableParams(pageable: Pageable) {
-    return new HttpParams()
-      .set('page', pageable.page)
-      .set('size', pageable.size)
-      .set('sort', pageable.sort);
   }
 }

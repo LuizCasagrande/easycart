@@ -16,7 +16,7 @@ export class CartService {
 
   save(cart: CartDto): Observable<any> {
     return this.http.post(this.endpoint, {
-      paymentMethod: cart.paymentMethod.enumValue,
+      paymentMethod: cart.paymentMethod.value,
       quantityPerProduct: Object.fromEntries(this.cartMapSubject.value),
     });
   }

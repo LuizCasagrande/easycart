@@ -1,0 +1,12 @@
+<div class="product-chips">
+  @for (product of getFirst3Products(); track product.id) {
+    <img [alt]="product.title"
+         [ngSrc]="resizeImage(product.image, 32, 32)"
+         height="32"
+         priority
+         width="32" />
+  }
+  @if (order.products.length > 3) {
+    <i class="pi pi-ellipsis-h text-sm"></i>
+  }
+</div>
