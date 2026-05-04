@@ -24,14 +24,12 @@ export const MESSAGES = {
     summary: 'Sucesso',
     detail: 'Usuário atualizado.',
   },
+  ORDER_COMPLETED: {
+    severity: 'success',
+    summary: 'Sucesso',
+    detail: 'Pedido finalizado.',
+  },
 };
-
-export const ORDER_STEPS = [
-  { label: 'Carrinho' },
-  { label: 'Entrega' },
-  { label: 'Pagamento' },
-  { label: 'Confirmação' },
-];
 
 export const CART = 'cart';
 export const AUTHORIZATION = 'authorization';

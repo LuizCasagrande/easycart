@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CartRequest } from '../cart-data';
+import { CartDto } from '../cart-data';
 import { Card } from 'primeng/card';
 import { Button } from 'primeng/button';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -16,7 +16,7 @@ export class Resume {
   index = 0;
 
   @Input()
-  cart = new CartRequest();
+  cart = new CartDto();
 
   @Input()
   total = 0;

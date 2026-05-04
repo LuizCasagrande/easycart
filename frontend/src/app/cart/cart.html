@@ -1,6 +1,6 @@
 <p-card>
   <p-steps [activeIndex]="activeIndex"
-           [model]="steps"
+           [model]="orderSteps"
            [readonly]="true" />
 </p-card>
 <div class="h-2rem"></div>
@@ -11,25 +11,25 @@
       @case (0) {
         <app-cart-product-list (onRemove)="remove($event)"
                                (onSetQuantity)="setQuantity($event.productId, $event.newQuantity)"
-                               [products]="cartRequest.products" />
+                               [products]="cartDto.products" />
       }
       @case (1) {
-        <app-shipping [(selected)]="cartRequest.shippingMethod"
-                      [user]="cartRequest.user" />
+        <app-shipping [(selected)]="cartDto.shippingMethod"
+                      [user]="cartDto.user" />
       }
       @case (2) {
-        <app-payment [(selected)]="cartRequest.paymentMethod" />
+        <app-payment [(selected)]="cartDto.paymentMethod" />
       }
       @case (3) {
-        <app-confirmation [products]="cartRequest.products"
-                          [user]="cartRequest.user" />
+        <app-confirmation [products]="cartDto.products"
+                          [user]="cartDto.user" />
       }
     }
   </div>
 
   <div class="w-12 xl:w-3">
-    <app-resume (onNavigate)="activeIndex = $event"
-                [cart]="cartRequest"
+    <app-resume (onNavigate)="navigate($event)"
+                [cart]="cartDto"
                 [index]="activeIndex"
                 [total]="getTotal()" />
   </div>

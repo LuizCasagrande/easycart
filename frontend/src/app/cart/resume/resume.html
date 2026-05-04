@@ -4,8 +4,8 @@
       <span class="text-lg font-semibold">{{ total | currency }}</span>
       <p-button (onClick)="onNavigate.emit(index + 1)"
                 [disabled]="cart.products.length < 1"
+                [label]="3 === index ? 'Finalizar' : 'Continuar'"
                 [outlined]="true"
-                label="Continuar"
                 styleClass="w-full" />
       @if (index) {
         <p-button (onClick)="onNavigate.emit(index - 1)"
