@@ -4,9 +4,9 @@ import { Order } from '../order-data';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-product-chips',
+  selector: 'app-order-product-chips',
   imports: [NgOptimizedImage],
-  templateUrl: './product-chips.html',
+  templateUrl: './order-product-chips.html',
   styles: `
     .product-chips {
       display: flex;
@@ -26,7 +26,7 @@ import { environment } from '../../../environments/environment';
     }
   `,
 })
-export class ProductChips {
+export class OrderProductChips {
   @Input()
   order!: Order;
 
@@ -35,9 +35,6 @@ export class ProductChips {
   }
 
   protected getFirst3Products() {
-    return this.order.products
-      .map((p) => p.product)
-      .sort((a, b) => a.id - b.id)
-      .slice(0, 3);
+    return this.order.products.sort((a, b) => a.id - b.id).slice(0, 3);
   }
 }

@@ -7,10 +7,36 @@
                   routerLink="/order" />
       </div>
     </ec-header-actions>
+
+    <div class="flex justify-content-evenly line-height-3 text-center">
+
+      @let user = order.user;
+      <section>
+        <span class="font-semibold">{{ user.name }}</span>
+        <div>Email: {{ user.email }}</div>
+        <span>Telefone: {{ user.phone | phone }}</span>
+      </section>
+
+      <section>
+        <span class="text-xl font-medium">Total:</span>
+        <div class="text-lg font-semibold">{{ order.total | currency }}</div>
+      </section>
+
+      @let address = user.address;
+      <section>
+        <span class="font-semibold">Endereço:</span>
+        <div>{{ address.street }} {{ address.number }}</div>
+        <span>{{ address.city }} - {{ address.zipcode }}</span>
+      </section>
+
+    </div>
+
+    <div class="h-1rem"></div>
+
   </p-card>
 
   <div class="h-1rem"></div>
 
-  <app-cart-product-list [products]="order.products.flatMap((p) => p.product)"
+  <app-cart-product-list [products]="order.products"
                          [readOnly]="true" />
 }

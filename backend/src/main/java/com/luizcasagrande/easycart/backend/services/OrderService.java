@@ -1,7 +1,7 @@
 package com.luizcasagrande.easycart.backend.services;
 
-import com.luizcasagrande.easycart.backend.entities.Cart;
-import com.luizcasagrande.easycart.backend.repositories.CartRepository;
+import com.luizcasagrande.easycart.backend.entities.Order;
+import com.luizcasagrande.easycart.backend.repositories.OrderRepository;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,37 +14,36 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class CartService implements CrudService<Cart> {
+public class OrderService implements CrudService<Order> {
 
-    private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
     private final UserService userService;
 
     @Override
-    public JpaRepository<Cart, Long> getRepository() {
-        return cartRepository;
+    public JpaRepository<Order, Long> getRepository() {
+        return orderRepository;
     }
 
     @Override
-    public Page<Cart> findAll(Pageable pageable) {
+    public Page<Order> findAll(Pageable pageable) {
         var user = userService.getLoggedIn();
         return user.isManager()
                 ? CrudService.super.findAll(pageable)
-                : cartRepository.findByUserId(user.getId(), pageable);
+                : orderRepository.findByUserId(user.getId(), pageable);
     }
 
     @Override
-    public Cart findById(Long id) {
+    public Order findById(Long id) {
         var user = userService.getLoggedIn();
         return user.isManager()
                 ? CrudService.super.findById(id)
-                : cartRepository.findByIdAndUserId(id, user.getId())
-                  .orElseThrow(NoResultException::new);
+                : orderRepository.findByIdAndUserId(id, user.getId()).orElseThrow(NoResultException::new);
     }
 
     @Override
-    public Cart save(Cart entity) {
+    public Order save(Order entity) {
         var total = entity.getProducts().stream()
-                .map(p -> p.getProduct().getPrice().multiply(p.getQuantity()))
+                .map(op -> op.getProduct().getPrice().multiply(BigDecimal.valueOf(op.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         entity.setTotal(total);

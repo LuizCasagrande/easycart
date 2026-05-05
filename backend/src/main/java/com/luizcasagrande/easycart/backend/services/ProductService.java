@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +24,9 @@ public class ProductService implements CrudService<Product> {
     }
 
     public Page<Product> findAll(String query, Pageable pageable) {
-        if (isNotBlank(query)) {
-            return productRepository.findAll(query, pageable);
-        }
-        return CrudService.super.findAll(pageable);
+        return isBlank(query)
+                ? CrudService.super.findAll(pageable)
+                : productRepository.findAll(query, pageable);
     }
 
     public Set<Product> findByIdIn(Set<Long> id) {

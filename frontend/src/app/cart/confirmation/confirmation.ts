@@ -3,7 +3,7 @@ import { User } from '../../user/user-data';
 import { Product } from '../../management/product/product-data';
 import { Card } from 'primeng/card';
 import { PhonePipe } from '../../shared/pipes/phone.pipe';
-import { CartProductList } from '../product-list/cart-product-list';
+import { CartProductList } from '../cart-product-list/cart-product-list';
 
 @Component({
   selector: 'app-confirmation',

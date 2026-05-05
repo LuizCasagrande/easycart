@@ -4,6 +4,7 @@ import { Err } from './err';
 import { LoaderService } from './loader/loader.service';
 import { MessageService, ToastMessageOptions } from 'primeng/api';
 import { NavigationEnd, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -16,20 +17,18 @@ export class EasyCartService {
   ) {}
 
   onChangeUrl(func: (id: number) => void): void {
-    this.onNavigationEnd().subscribe((url) => {
+    const onNavigationEnd = this.router.events.pipe(
+      filter((event: any) => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => event.urlAfterRedirects),
+    );
+
+    onNavigationEnd.pipe(takeUntilDestroyed()).subscribe((url) => {
       const items = url.split('/');
       const id = Number(items[items.length - 1] || 0);
       if (id) {
         func(id);
       }
     });
-  }
-
-  onNavigationEnd(): Observable<string> {
-    return this.router.events.pipe(
-      filter((event: any) => event instanceof NavigationEnd),
-      map((event: NavigationEnd) => event.urlAfterRedirects),
-    );
   }
 
   executeRequest<T>(

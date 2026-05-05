@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { Steps } from 'primeng/steps';
 import { CartDto, FINAL_STEP, ORDER_STEPS } from './cart-data';
 import { Confirmation } from './confirmation/confirmation';
-import { CartProductList } from './product-list/cart-product-list';
-import { Router } from '@angular/router';
+import { CartProductList } from './cart-product-list/cart-product-list';
+import { OrderService } from '../order/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -24,32 +24,31 @@ import { Router } from '@angular/router';
 export class Cart implements OnInit {
   protected orderSteps = ORDER_STEPS;
   protected activeIndex = 0;
-  protected cartMap: Map<string, number> = new Map();
   protected cartDto = new CartDto();
 
   constructor(
     protected easyCartService: EasyCartService,
     protected cartService: CartService,
+    protected orderService: OrderService,
     protected productService: ProductService,
     protected userService: UserService,
     protected confirmationService: ConfirmationService,
     protected messageService: MessageService,
-    protected router: Router,
   ) {
     this.userService.user$.subscribe((user) => (this.cartDto.user = user));
-    this.cartService.cartMap$.subscribe((cartMap) => (this.cartMap = cartMap));
+    this.cartService.cartMap$.subscribe((cartMap) => (this.cartDto.quantityPerProduct = cartMap));
   }
 
   ngOnInit(): void {
-    this.cartMap.forEach((quantity, productId) =>
-      this.easyCartService // todo better
+    this.cartDto.quantityPerProduct.forEach((quantity, productId) =>
+      this.easyCartService
         .executeRequest(this.productService.findById(Number(productId)), false)
         .subscribe((product) => {
           product.quantity = quantity;
           this.cartDto.products.push(product);
           this.cartDto.products = this.cartDto.products.sort((a, b) => a.id - b.id);
         }),
-    );
+    ); // todo better
   }
 
   protected remove(productId: number): void {
@@ -68,7 +67,7 @@ export class Cart implements OnInit {
   }
 
   protected setQuantity(productId: number, newQuantity: number): void {
-    const oldQuantity = this.cartMap.get(String(productId))!;
+    const oldQuantity = this.cartDto.quantityPerProduct.get(String(productId))!;
     this.cartService.add(productId, newQuantity - oldQuantity);
   }
 
@@ -80,9 +79,9 @@ export class Cart implements OnInit {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja finalizar?',
       accept: () => {
-        this.easyCartService.executeRequest(this.cartService.save(this.cartDto)).subscribe(() => {
+        this.easyCartService.executeRequest(this.orderService.save(this.cartDto)).subscribe(() => {
           this.cartService.reset();
-          this.router
+          this.easyCartService
             .navigateByUrl('/order')
             .then(() => this.messageService.add(MESSAGES.ORDER_COMPLETED));
         });

@@ -26,6 +26,8 @@ import java.util.Set;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("v1/product")
@@ -39,12 +41,12 @@ public class ProductController {
     public Page<ProductResponse> findAll(@RequestParam(value = "query", required = false) String query,
                                          Pageable pageable) {
         return productService.findAll(query, pageable)
-                .map(p -> modelMapper.map(p, ProductResponse.class));
+                .map(this::toResponse);
     }
 
     @GetMapping("{id}")
     public ProductResponse findById(@PathVariable Long id) {
-        return modelMapper.map(productService.findById(id), ProductResponse.class);
+        return toResponse(productService.findById(id));
     }
 
     @AuthorizeOnlyManager
@@ -52,8 +54,7 @@ public class ProductController {
     public ResponseEntity<ProductResponse> save(@Valid @RequestBody ProductRequest productRequest) {
         var product = modelMapper.map(productRequest, Product.class);
         product = productService.save(product);
-        return ResponseEntity.status(CREATED)
-                .body(modelMapper.map(product, ProductResponse.class));
+        return status(CREATED).body(toResponse(product));
     }
 
     @AuthorizeOnlyManager
@@ -63,15 +64,14 @@ public class ProductController {
         var product = productService.findById(id);
         modelMapper.map(productUpdateRequest, product);
         product = productService.save(product);
-        return ResponseEntity.status(OK)
-                .body(modelMapper.map(product, ProductResponse.class));
+        return status(OK).body(toResponse(product));
     }
 
     @AuthorizeOnlyManager
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.delete(id);
-        return ResponseEntity.noContent().build();
+        return noContent().build();
     }
 
     @GetMapping("category")
@@ -83,6 +83,10 @@ public class ProductController {
     public Page<ProductResponse> findByCategoryIn(@RequestParam("categories") Set<String> categories,
                                                   Pageable pageable) {
         return productService.findByCategoryIn(categories, pageable)
-                .map(p -> modelMapper.map(p, ProductResponse.class));
+                .map(this::toResponse);
+    }
+
+    private ProductResponse toResponse(Product p) {
+        return modelMapper.map(p, ProductResponse.class);
     }
 }

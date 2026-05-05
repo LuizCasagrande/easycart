@@ -15,18 +15,18 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: name
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: email
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     unique: true
                     nullable: false
               - column:
                   name: password
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
@@ -51,12 +51,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: city
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: street
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
@@ -97,7 +97,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: title
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     unique: true
                     nullable: false
@@ -108,7 +108,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: price
-                  type: decimal(16, 2)
+                  type: decimal(10, 2)
                   constraints:
                     nullable: false
               - column:
@@ -118,11 +118,11 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: image
-                  type: varchar(250)
+                  type: varchar(255)
                   constraints:
                     nullable: false
         - createTable:
-            tableName: cart
+            tableName: order
             columns:
               - column:
                   name: id
@@ -138,7 +138,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: total
-                  type: decimal(16, 2)
+                  type: decimal(10, 2)
                   constraints:
                     nullable: false
               - column:
@@ -152,7 +152,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - createTable:
-            tableName: cart_product
+            tableName: order_product
             columns:
               - column:
                   name: id
@@ -163,7 +163,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: quantity
-                  type: decimal(16, 2)
+                  type: int
                   constraints:
                     nullable: false
               - column:
@@ -172,27 +172,27 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: cart_id
+                  name: order_id
                   type: bigint
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            baseTableName: cart
+            baseTableName: order
             baseColumnNames: user_id
-            constraintName: fk_cart_user
+            constraintName: fk_order_user
             referencedTableName: user
             referencedColumnNames: id
         - addForeignKeyConstraint:
-            baseTableName: cart_product
+            baseTableName: order_product
             baseColumnNames: product_id
-            constraintName: fk_cart_product_product
+            constraintName: fk_order_product_product
             referencedTableName: product
             referencedColumnNames: id
         - addForeignKeyConstraint:
-            baseTableName: cart_product
-            baseColumnNames: cart_id
-            constraintName: fk_cart_product_cart
-            referencedTableName: cart
+            baseTableName: order_product
+            baseColumnNames: order_id
+            constraintName: fk_order_product_order
+            referencedTableName: order
             referencedColumnNames: id
   - changeSet:
       id: 3

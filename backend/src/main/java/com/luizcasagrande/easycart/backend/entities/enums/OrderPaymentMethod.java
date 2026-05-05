@@ -1,6 +1,6 @@
 package com.luizcasagrande.easycart.backend.entities.enums;
 
-public enum CartPaymentMethod {
+public enum OrderPaymentMethod {
 
     PIX,
     BANK_SLIP,

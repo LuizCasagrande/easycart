@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("v1/user")
@@ -31,13 +32,12 @@ public class UserController {
     public ResponseEntity<UserResponse> save(@RequestBody UserRequest userRequest) {
         var user = modelMapper.map(userRequest, User.class);
         user = userService.save(user);
-        return ResponseEntity.status(CREATED)
-                .body(modelMapper.map(user, UserResponse.class));
+        return status(CREATED).body(toResponse(user));
     }
 
     @GetMapping("logged-in")
     public ResponseEntity<UserResponse> getLoggedIn() {
-        return ResponseEntity.ok(modelMapper.map(userService.getLoggedIn(), UserResponse.class));
+        return ResponseEntity.ok(toResponse(userService.getLoggedIn()));
     }
 
     @PutMapping("logged-in")
@@ -45,7 +45,10 @@ public class UserController {
         var user = userService.getLoggedIn();
         modelMapper.map(userUpdateRequest, user);
         user = userService.save(user);
-        return ResponseEntity.status(OK)
-                .body(modelMapper.map(user, UserResponse.class));
+        return status(OK).body(toResponse(user));
+    }
+
+    private UserResponse toResponse(User user) {
+        return modelMapper.map(user, UserResponse.class);
     }
 }

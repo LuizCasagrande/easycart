@@ -1,7 +1,7 @@
 package com.luizcasagrande.easycart.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.luizcasagrande.easycart.backend.entities.enums.CartPaymentMethod;
+import com.luizcasagrande.easycart.backend.entities.enums.OrderPaymentMethod;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -25,8 +25,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
 @EqualsAndHashCode(of = "id")
-@Entity
-public class Cart {
+@Entity(name = "`order`")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -43,7 +43,7 @@ public class Cart {
     @Setter
     @Enumerated(STRING)
     @Column(nullable = false)
-    private CartPaymentMethod paymentMethod;
+    private OrderPaymentMethod paymentMethod;
 
     @Setter
     @ManyToOne
@@ -52,6 +52,6 @@ public class Cart {
 
     @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "cart", cascade = ALL, orphanRemoval = true)
-    private Set<CartProduct> products = new HashSet<>();
+    @OneToMany(mappedBy = "order", cascade = ALL, orphanRemoval = true)
+    private Set<OrderProduct> products = new HashSet<>();
 }

@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jspecify.annotations.NonNull;
 
-import java.math.BigDecimal;
-
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.util.Objects.requireNonNull;
 
@@ -22,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "product")
 @Entity
-public class CartProduct {
+public class OrderProduct {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -30,7 +28,7 @@ public class CartProduct {
 
     @Setter
     @Column(nullable = false)
-    private BigDecimal quantity;
+    private Integer quantity;
 
     @Setter
     @ManyToOne
@@ -41,13 +39,13 @@ public class CartProduct {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Cart cart;
+    private Order order;
 
-    public CartProduct(@NonNull BigDecimal quantity,
-                       @NonNull Product product,
-                       @NonNull Cart cart) {
+    public OrderProduct(@NonNull Integer quantity,
+                        @NonNull Product product,
+                        @NonNull Order order) {
         this.quantity = requireNonNull(quantity);
         this.product = requireNonNull(product);
-        this.cart = requireNonNull(cart);
+        this.order = requireNonNull(order);
     }
 }

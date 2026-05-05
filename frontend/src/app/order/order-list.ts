@@ -12,7 +12,7 @@ import { TableHeader } from '../shared/table-header/table-header';
 import { TableModule } from 'primeng/table';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { PaymentMethodPipe } from '../shared/pipes/payment-method.pipe';
-import { ProductChips } from './product-chips/product-chips';
+import { OrderProductChips } from './order-product-chips/order-product-chips';
 
 @Component({
   selector: 'app-order-list',
@@ -26,7 +26,7 @@ import { ProductChips } from './product-chips/product-chips';
     TableHeader,
     DatePipe,
     PaymentMethodPipe,
-    ProductChips,
+    OrderProductChips,
   ],
   templateUrl: './order-list.html',
 })

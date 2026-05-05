@@ -1,6 +1,6 @@
 package com.luizcasagrande.easycart.backend.http.response;
 
-import com.luizcasagrande.easycart.backend.entities.enums.CartPaymentMethod;
+import com.luizcasagrande.easycart.backend.entities.enums.OrderPaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +10,12 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class CartResponse {
+public class OrderResponse {
 
     private Long id;
     private LocalDateTime date;
     private BigDecimal total;
-    private CartPaymentMethod paymentMethod;
+    private OrderPaymentMethod paymentMethod;
     private UserResponse user;
-    private Set<CartProductResponse> products;
+    private Set<OrderProductResponse> products;
 }

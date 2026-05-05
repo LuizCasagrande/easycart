@@ -23,13 +23,6 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   { name: 'Cartão de Crédito', icon: 'pi-credit-card', value: 'CREDIT_CARD' },
 ];
 
-export class CartDto {
-  user!: User;
-  products: Product[] = [];
-  shippingMethod: ShippingMethod = SHIPPING_METHODS[0];
-  paymentMethod: PaymentMethod = PAYMENT_METHODS[0];
-}
-
 export interface ShippingMethod {
   name: string;
   date: Date;
@@ -40,4 +33,12 @@ export interface PaymentMethod {
   name: string;
   icon: string;
   value: string;
+}
+
+export class CartDto {
+  user!: User;
+  products: Product[] = [];
+  quantityPerProduct: Map<string, number> = new Map();
+  shippingMethod: ShippingMethod = SHIPPING_METHODS[0];
+  paymentMethod: PaymentMethod = PAYMENT_METHODS[0];
 }
