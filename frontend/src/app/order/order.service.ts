@@ -15,7 +15,7 @@ export class OrderService {
 
   save(cartDto: CartDto): Observable<Order> {
     return this.http.post<Order>(this.endpoint, {
-      paymentMethod: cartDto.paymentMethod,
+      paymentMethod: cartDto.paymentMethod.value,
       quantityPerProduct: Object.fromEntries(cartDto.quantityPerProduct),
     });
   }

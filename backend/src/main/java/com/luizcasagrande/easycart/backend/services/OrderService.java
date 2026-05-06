@@ -2,8 +2,10 @@ package com.luizcasagrande.easycart.backend.services;
 
 import com.luizcasagrande.easycart.backend.entities.Order;
 import com.luizcasagrande.easycart.backend.repositories.OrderRepository;
+import com.luizcasagrande.easycart.backend.services.events.OrderSaveEvent;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +20,7 @@ public class OrderService implements CrudService<Order> {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public JpaRepository<Order, Long> getRepository() {
@@ -50,6 +53,8 @@ public class OrderService implements CrudService<Order> {
         entity.setDate(LocalDateTime.now());
         entity.setUser(userService.getLoggedIn());
 
-        return CrudService.super.save(entity);
+        entity = CrudService.super.save(entity);
+        publisher.publishEvent(new OrderSaveEvent(entity));
+        return entity;
     }
 }

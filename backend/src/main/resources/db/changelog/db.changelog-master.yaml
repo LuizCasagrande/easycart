@@ -78,7 +78,7 @@ databaseChangeLog:
         - addForeignKeyConstraint:
             baseTableName: user_address
             baseColumnNames: user_id
-            constraintName: fk_user_address_user
+            constraintName: fk_user_address__user
             referencedTableName: user
             referencedColumnNames: id
   - changeSet:
@@ -179,19 +179,19 @@ databaseChangeLog:
         - addForeignKeyConstraint:
             baseTableName: order
             baseColumnNames: user_id
-            constraintName: fk_order_user
+            constraintName: fk_order__user
             referencedTableName: user
             referencedColumnNames: id
         - addForeignKeyConstraint:
             baseTableName: order_product
             baseColumnNames: product_id
-            constraintName: fk_order_product_product
+            constraintName: fk_order_product__product
             referencedTableName: product
             referencedColumnNames: id
         - addForeignKeyConstraint:
             baseTableName: order_product
             baseColumnNames: order_id
-            constraintName: fk_order_product_order
+            constraintName: fk_order_product__order
             referencedTableName: order
             referencedColumnNames: id
   - changeSet:

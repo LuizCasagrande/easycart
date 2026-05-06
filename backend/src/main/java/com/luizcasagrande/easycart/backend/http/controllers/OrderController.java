@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class OrderController {
         return toResponse(orderService.findById(id));
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public ResponseEntity<OrderResponse> save(@Valid @RequestBody OrderRequest orderRequest) {
         var order = modelMapper.map(orderRequest, Order.class);
